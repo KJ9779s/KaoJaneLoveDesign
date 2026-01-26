@@ -4,7 +4,7 @@
         artist: " Kao Supassara, Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/85/7b/da/857bda2aab209e80f20fca0fbb38391f.jpg",
         src: "s1.mp3",
-        video: "v1.mp4",
+        video: "phP8xHNDP5E",
         lyrics: [
             { time: 0, text: "（前奏）", translation: " " },
             { time: 15, text: "ความรักเกิดขึ้นเมื่อไหร่ ก็ไม่รู้ แต่ก็เกิดไปแล้ว", translation: "我不知道愛情是何時開始的 但它就這樣發生了" },
@@ -45,7 +45,7 @@
         artist: "Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/e9/d9/39/e9d9395a0ec6e582ce2e7c73562a56cd.jpg",
         src: "s2.mp3",
-        video: "v2.mp4",
+        video: "NjnlW04Q01A",
         lyrics: [
             { time: 0, text: " ", translation: " " },
             { time: 4, text: "ยังไงอ่ะใจ มันเป็นอะไร", translation: "這是怎麼了 心跳失了控" },
@@ -114,7 +114,7 @@
         artist: "Palm Paramee",
         img: "https://i.pinimg.com/736x/c2/95/27/c29527731c80709e56483f79bd40c3f6.jpg",
         src: "s3.mp3",
-        video: "v3.mp4",
+        video: "675RmjZMDXM",
         lyrics: [
             { time: 0, text: " ", translation: " " },
             { time: 23.8, text: "I'll meet you there at our city's fair ", translation: "我會在城市的市集遇見妳" },
@@ -155,7 +155,7 @@
         artist: " Kao Supassara, Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/1c/69/3f/1c693f8b964ab2d2b899b39950bc1bb2.jpg",
         src: "s4.mp3",
-        video: "v4.mp4",
+        video: "Rbr1O0UBvZo",
         lyrics: [
             { time: 0, text: "（前奏）", translation: " " },
             { time: 17, text: "ตั้งแต่วันที่ฉันได้พบเธอ", translation: "從遇見妳的那天起" },
@@ -197,7 +197,7 @@
         artist: " Kao Supassara, Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/80/4d/f2/804df27bde16e748afa65bb49f44d2eb.jpg",
         src: "s5.mp3",
-        video: "v5.mp4",
+        video: "F1FXa56T0WE",
         lyrics: [
             { time: 0, text: "(前奏)", translation: " " },
             { time: 19.9, text: "Last Christmas I gave you my heart", translation: "去年聖誕 我把心交給妳 " },
@@ -253,88 +253,87 @@ const mainContainer = document.querySelector(".main-container"),
     musicCurrentTime = mainContainer.querySelector(".current"),
     musicDuration = mainContainer.querySelector(".duration"),
     volumeSlider = mainContainer.querySelector("#volume-slider"),
-    bgVideo = document.getElementById("bg-video"),
     lyricsWrapper = document.getElementById("lyrics-wrapper");
 
 let musicIndex = 0;
 let mainAudio = new Audio();
 let isPlaying = false;
 let currentLyricIndex = -1;
+let ytPlayer; // YouTube 播放器實例
 
+// --- 1. 載入 YouTube IFrame API ---
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+// API 準備好後自動呼叫
+function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player('player', {
+        videoId: allMusic[musicIndex].video,
+        playerVars: {
+            'autoplay': 1,
+            'mute': 1,       // 必須靜音才能自動播放
+            'controls': 0,   // 隱藏控制項
+            'loop': 1,
+            'modestbranding': 1,
+            'playlist': allMusic[musicIndex].video // 循環播放必備
+        },
+        events: {
+            'onReady': (event) => {
+                event.target.playVideo();
+                event.target.setPlaybackQuality('hd720'); // 優化效能
+            }
+        }
+    });
+}
+
+// --- 2. 初始化設定 ---
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
+    // 初次點擊啟動音樂，繞過瀏覽器限制
     document.body.addEventListener('click', () => {
         if (!isPlaying && mainAudio.paused) playSong();
     }, { once: true });
 });
 
-mainAudio.volume = volumeSlider.value;
-volumeSlider.addEventListener("input", (e) => {
-    mainAudio.volume = e.target.value;
-});
-
-// 鍵盤操作監聽 (空白鍵暫停、左右跳轉、上下音量)
-window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-        e.preventDefault();
-        isPlaying ? pauseSong() : playSong();
-    }
-    else if (e.code === "ArrowLeft") {
-        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
-        currentLyricIndex = -1;
-    }
-    else if (e.code === "ArrowRight") {
-        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
-        currentLyricIndex = -1;
-    }
-    else if (e.code === "ArrowUp") {
-        e.preventDefault();
-        mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
-        volumeSlider.value = mainAudio.volume;
-    }
-    else if (e.code === "ArrowDown") {
-        e.preventDefault();
-        mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
-        volumeSlider.value = mainAudio.volume;
-    }
-});
-
+// --- 3. 音樂載入邏輯 (優先加載音訊) ---
 function loadMusic(index) {
     musicName.innerText = allMusic[index].name;
     musicArtist.innerText = allMusic[index].artist;
     musicImg.src = allMusic[index].img;
+
+    // 優先處理音訊，檔案小、載入快
     mainAudio.src = allMusic[index].src;
-    bgVideo.src = allMusic[index].video;
+    mainAudio.load();
+
+    // 背景影片交由 YouTube 串流，不佔用本地頻寬
+    if (ytPlayer && ytPlayer.loadVideoById) {
+        ytPlayer.loadVideoById({
+            videoId: allMusic[index].video,
+            startSeconds: 0
+        });
+    }
+
     currentLyricIndex = -1;
     displayLyrics(allMusic[index].lyrics);
-    bgVideo.load();
-    mainAudio.load();
-}
-
-function displayLyrics(lyrics) {
-    lyricsWrapper.innerHTML = lyrics.map(line =>
-        `<div class="lyric-line">
-            <div class="main-text">${line.text}</div>
-            <div class="sub-text">${line.translation || ""}</div>
-        </div>`
-    ).join("");
-    lyricsWrapper.style.transform = `translateY(180px)`;
 }
 
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
     mainAudio.play();
-    bgVideo.play();
+    if (ytPlayer) ytPlayer.playVideo();
 }
 
 function pauseSong() {
     isPlaying = false;
     playPauseIcon.classList.replace("fa-pause", "fa-play");
     mainAudio.pause();
-    bgVideo.pause();
+    if (ytPlayer) ytPlayer.pauseVideo();
 }
 
+// --- 4. 控制項監聽 ---
 playPauseBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     isPlaying ? pauseSong() : playSong();
@@ -352,22 +351,28 @@ prevBtn.addEventListener("click", () => {
     playSong();
 });
 
+// --- 5. 時間更新與歌詞連動 ---
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
+
     if (duration) {
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
     }
+
     let currentMin = Math.floor(currentTime / 60);
     let currentSec = Math.floor(currentTime % 60);
     if (currentSec < 10) currentSec = `0${currentSec}`;
     musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
+
+    // 歌詞滾動
     const songLyrics = allMusic[musicIndex].lyrics;
     let activeIndex = -1;
     for (let i = 0; i < songLyrics.length; i++) {
         if (currentTime >= songLyrics[i].time) activeIndex = i;
     }
+
     if (activeIndex !== -1 && activeIndex !== currentLyricIndex) {
         currentLyricIndex = activeIndex;
         const lines = document.querySelectorAll(".lyric-line");
@@ -384,11 +389,27 @@ mainAudio.addEventListener("timeupdate", (e) => {
     }
 });
 
+// --- 6. 輔助功能 ---
+function displayLyrics(lyrics) {
+    lyricsWrapper.innerHTML = lyrics.map(line =>
+        `<div class="lyric-line">
+            <div class="main-text">${line.text}</div>
+            <div class="sub-text">${line.translation || ""}</div>
+        </div>`
+    ).join("");
+    lyricsWrapper.style.transform = `translateY(180px)`;
+}
+
 mainAudio.addEventListener("loadedmetadata", () => {
     let totalMin = Math.floor(mainAudio.duration / 60);
     let totalSec = Math.floor(mainAudio.duration % 60);
     if (totalSec < 10) totalSec = `0${totalSec}`;
     musicDuration.innerText = `${totalMin}:${totalSec}`;
+});
+
+mainAudio.volume = volumeSlider.value;
+volumeSlider.addEventListener("input", (e) => {
+    mainAudio.volume = e.target.value;
 });
 
 progressArea.addEventListener("click", (e) => {
@@ -400,3 +421,17 @@ progressArea.addEventListener("click", (e) => {
 });
 
 mainAudio.addEventListener("ended", () => nextBtn.click());
+
+// 鍵盤操作監聽
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+        e.preventDefault();
+        isPlaying ? pauseSong() : playSong();
+    } else if (e.code === "ArrowLeft") {
+        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
+        currentLyricIndex = -1;
+    } else if (e.code === "ArrowRight") {
+        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
+        currentLyricIndex = -1;
+    }
+});
