@@ -1,3 +1,4 @@
+/* --- 基礎設定 --- */
 * {
     margin: 0;
     padding: 0;
@@ -11,13 +12,14 @@ body {
     background-color: #000;
 }
 
+/* --- 浮水印：維持精緻的 18px --- */
 .watermark {
     position: fixed;
     top: 25px;
     right: 30px;
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 5px; /* 貼合間距 5px */
     z-index: 100;
 }
 
@@ -33,6 +35,7 @@ body {
         letter-spacing: 0.5px;
     }
 
+/* --- YouTube 背景影片容器 --- */
 #yt-player-container {
     position: fixed;
     top: 0;
@@ -52,11 +55,12 @@ body {
     width: 100vw;
     height: 100vh;
     transform: translate(-50%, -50%) scale(1.5);
-    /* 這裡設定為 0px 以保持跟原始影片一樣清晰 */
+    /* 恢復清晰度 */
     filter: brightness(0.6) blur(0px);
     transition: opacity 1s ease-in-out;
 }
 
+/* --- 主容器布局 --- */
 .main-container {
     position: relative;
     display: flex;
@@ -69,6 +73,7 @@ body {
     z-index: 10;
 }
 
+/* --- 播放器卡片 --- */
 .player-card {
     width: 320px;
     padding: 25px;
@@ -96,38 +101,32 @@ body {
         object-fit: cover;
     }
 
-.lyrics-area {
-    width: 850px;
-    height: 550px;
-    overflow: hidden;
-    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+/* --- 歌曲文字資訊優化 --- */
+.song-details {
+    margin-top: 25px; /* 增加與圖片的間距，不再貼齊 */
 }
 
-#lyrics-wrapper {
-    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-}
-
-.lyric-line {
-    padding: 30px 60px;
-    opacity: 0.3;
-    transition: all 0.5s ease;
-    color: #fff;
-    font-size: 24px;
-}
-
-    .lyric-line.active {
-        opacity: 1;
-        transform: scale(1.05);
+    .song-details .name {
+        font-size: 22px; /* 歌名加大 */
+        font-weight: 700;
+        margin-bottom: 6px;
+        color: #fff;
     }
 
-/* 控制項與進度條樣式 */
+    .song-details .artist {
+        font-size: 14px; /* 歌手名字縮小 */
+        color: rgba(255, 255, 255, 0.5); /* 增加透明度，做出視覺層次感 */
+        font-weight: 400;
+    }
+
+/* --- 進度條與計時器 --- */
 .progress-area {
     height: 6px;
     width: 100%;
     background: rgba(255,255,255,0.1);
     border-radius: 50px;
     cursor: pointer;
-    margin: 30px 0;
+    margin: 30px 0 10px 0;
 }
 
 .progress-bar {
@@ -143,20 +142,27 @@ body {
     justify-content: space-between;
     margin-top: 5px;
     font-size: 12px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
+/* --- 播放控制按鈕 --- */
 .controls {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin: 40px 0 20px;
+    margin: 30px 0 20px;
 }
 
     .controls i {
         font-size: 28px;
         cursor: pointer;
         user-select: none;
+        transition: transform 0.2s;
     }
+
+        .controls i:active {
+            transform: scale(0.9);
+        }
 
 .play-pause {
     height: 54px;
@@ -168,3 +174,57 @@ body {
     align-items: center;
     justify-content: center;
 }
+
+/* --- 音量控制區塊：物理拉長 --- */
+.volume-area {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 35px;
+    gap: 12px;
+}
+
+    .volume-area i {
+        font-size: 16px;
+        opacity: 0.7;
+    }
+
+#volume-slider {
+    width: 200px; /* 音量條拉長，超過上方按鈕寬度 */
+    cursor: pointer;
+    accent-color: #fff;
+    height: 4px;
+    opacity: 0.6;
+    transition: opacity 0.3s;
+}
+
+    #volume-slider:hover {
+        opacity: 1;
+    }
+
+/* --- 歌詞顯示區塊 --- */
+.lyrics-area {
+    width: 850px;
+    height: 550px;
+    overflow: hidden;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+}
+
+#lyrics-wrapper {
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.lyric-line {
+    padding: 30px 60px;
+    opacity: 0.3;
+    transition: all 0.5s ease;
+    color: #fff;
+    font-size: 26px; /* 歌詞字體適度調整 */
+    line-height: 1.6;
+}
+
+    .lyric-line.active {
+        opacity: 1;
+        transform: scale(1.05);
+    }

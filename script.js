@@ -310,7 +310,7 @@ function loadMusic(index) {
     displayLyrics(music.lyrics);
 }
 
-// --- 3. 播放控制邏輯 (修正切換與自動播放) ---
+// --- 3. 播放控制邏輯 ---
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
@@ -336,10 +336,15 @@ function prevMusic() {
 }
 
 // --- 4. 事件監聽 (修正按鈕與音量控制) ---
-playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
+playPauseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    isPlaying ? pauseSong() : playSong();
+});
+
 nextBtn.addEventListener("click", () => nextMusic());
 prevBtn.addEventListener("click", () => prevMusic());
 
+// 音量滑桿控制
 volumeSlider.addEventListener("input", (e) => {
     mainAudio.volume = e.target.value;
 });
@@ -347,7 +352,37 @@ volumeSlider.addEventListener("input", (e) => {
 // 自動下一首
 mainAudio.addEventListener("ended", () => nextMusic());
 
-// --- 5. 時間更新與歌詞捲動 (修正 0:00 顯示問題) ---
+// --- 5. 鍵盤操作監聽 (新增：左右跳轉、上下音量) ---
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+        e.preventDefault();
+        isPlaying ? pauseSong() : playSong();
+    }
+    else if (e.code === "ArrowLeft") {
+        // 向左跳轉 5 秒
+        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
+        currentLyricIndex = -1; // 強制刷新歌詞位置
+    }
+    else if (e.code === "ArrowRight") {
+        // 向右跳轉 5 秒
+        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
+        currentLyricIndex = -1;
+    }
+    else if (e.code === "ArrowUp") {
+        e.preventDefault();
+        // 音量增加 0.05
+        mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
+        volumeSlider.value = mainAudio.volume; // 同步更新滑桿
+    }
+    else if (e.code === "ArrowDown") {
+        e.preventDefault();
+        // 音量減少 0.05
+        mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
+        volumeSlider.value = mainAudio.volume; // 同步更新滑桿
+    }
+});
+
+// --- 6. 時間更新與歌詞捲動 ---
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
@@ -362,7 +397,7 @@ mainAudio.addEventListener("timeupdate", (e) => {
         let curSec = Math.floor(currentTime % 60);
         musicCurrentTime.innerText = `${curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
 
-        // 更新總長度 (修正點)
+        // 更新總長度 (解決顯示為 0:00 問題)
         let durMin = Math.floor(duration / 60);
         let durSec = Math.floor(duration % 60);
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
@@ -379,7 +414,7 @@ progressArea.addEventListener("click", (e) => {
     playSong();
 });
 
-// --- 6. 輔助函式 ---
+// --- 7. 輔助函式 ---
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
         `<div class="lyric-line">
@@ -416,16 +451,8 @@ function updateLyrics(currentTime) {
 // 初始化
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    // 首次交互啟動背景 (手機版瀏覽器限制)
+    // 首次點擊啟動 (繞過瀏覽器限制)
     document.body.addEventListener('click', () => {
         if (ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
     }, { once: true });
-});
-
-// 空白鍵控制 (修正：不暫停背景)
-window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-        e.preventDefault();
-        isPlaying ? pauseSong() : playSong();
-    }
 });
