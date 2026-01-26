@@ -240,196 +240,128 @@
         ]
     }
 ];
-const mainContainer = document.querySelector(".main-container"),
-    musicImg = mainContainer.querySelector(".img-area img"),
-    musicName = mainContainer.querySelector(".song-details .name"),
-    musicArtist = mainContainer.querySelector(".song-details .artist"),
-    playPauseBtn = mainContainer.querySelector(".play-pause"),
-    playPauseIcon = mainContainer.querySelector(".play-pause i"),
-    prevBtn = mainContainer.querySelector("#prev"),
-    nextBtn = mainContainer.querySelector("#next"),
-    progressBar = mainContainer.querySelector(".progress-bar"),
-    progressArea = mainContainer.querySelector(".progress-area"),
-    musicCurrentTime = mainContainer.querySelector(".current"),
-    musicDuration = mainContainer.querySelector(".duration"),
-    volumeSlider = mainContainer.querySelector("#volume-slider"),
-    lyricsWrapper = document.getElementById("lyrics-wrapper");
+let ytPlayer, musicIndex = 0, mainAudio = new Audio(), isPlaying = false, currentLyricIndex = -1;
 
-let musicIndex = 0;
-let mainAudio = new Audio();
-let isPlaying = false;
-let currentLyricIndex = -1;
-let ytPlayer; // YouTube 播放器實例
-
-// --- 1. 載入 YouTube IFrame API ---
+// YouTube API 載入
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
 firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 
-// API 準備好後自動呼叫
 function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player('player', {
         videoId: allMusic[musicIndex].video,
         playerVars: {
-            'autoplay': 1,
-            'mute': 1,
-            'controls': 0,
-            'loop': 1,
-            'playlist': allMusic[musicIndex].video, // 關鍵：必須包含 playlist 才能循環
-            'playsinline': 1
+            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 1,
+            'playlist': allMusic[musicIndex].video,
+            'playsinline': 1, 'modestbranding': 1, 'rel': 0
         },
         events: {
-            'onReady': (event) => {
-                event.target.playVideo();
-                event.target.setPlaybackQuality('hd720'); // 優化效能
+            'onReady': (e) => e.target.playVideo(),
+            // 雙重保險：當影片狀態改變時執行
+            'onStateChange': (e) => {
+                // 如果影片結束 (State 0)，強制重新播放達成循環播放
+                if (e.data === YT.PlayerState.ENDED) {
+                    ytPlayer.playVideo();
+                }
             }
         }
     });
 }
 
-// --- 2. 初始化設定 ---
-window.addEventListener("load", () => {
-    loadMusic(musicIndex);
-    // 初次點擊啟動音樂，繞過瀏覽器限制
-    document.body.addEventListener('click', () => {
-        if (!isPlaying && mainAudio.paused) playSong();
-    }, { once: true });
-});
-
-// --- 3. 音樂載入邏輯 (優先加載音訊) ---
 function loadMusic(index) {
-    musicName.innerText = allMusic[index].name;
-    musicArtist.innerText = allMusic[index].artist;
-    musicImg.src = allMusic[index].img;
-
-    // 優先處理音訊，檔案小、載入快
+    document.querySelector(".name").innerText = allMusic[index].name;
+    document.querySelector(".artist").innerText = allMusic[index].artist;
+    document.querySelector(".img-area img").src = allMusic[index].img;
     mainAudio.src = allMusic[index].src;
     mainAudio.load();
 
-    // 背景影片交由 YouTube 串流，不佔用本地頻寬
     if (ytPlayer && ytPlayer.loadVideoById) {
         ytPlayer.loadVideoById({
             videoId: allMusic[index].video,
+            playlist: allMusic[index].video,
             startSeconds: 0
         });
     }
-
-    currentLyricIndex = -1;
     displayLyrics(allMusic[index].lyrics);
 }
 
+// 播放與暫停控制（背景影片獨立，不受暫停影響）
 function playSong() {
     isPlaying = true;
-    playPauseIcon.classList.replace("fa-play", "fa-pause");
+    document.querySelector(".play-pause i").classList.replace("fa-play", "fa-pause");
     mainAudio.play();
+    // 背景影片始終播放，不在此處控制，除非你需要切換歌曲時同步
 }
 
 function pauseSong() {
     isPlaying = false;
-    playPauseIcon.classList.replace("fa-pause", "fa-play");
+    document.querySelector(".play-pause i").classList.replace("fa-pause", "fa-play");
     mainAudio.pause();
+    // 這裡不呼叫 ytPlayer.pauseVideo()，所以背景會繼續動
 }
 
-// --- 4. 控制項監聽 ---
-playPauseBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
+// 事件監聽
+document.querySelector(".play-pause").addEventListener("click", () => {
     isPlaying ? pauseSong() : playSong();
 });
 
-nextBtn.addEventListener("click", () => {
-    musicIndex = (musicIndex + 1) % allMusic.length;
-    loadMusic(musicIndex);
-    playSong();
+// 空白鍵控制 (修正：不影響背景影片)
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+        e.preventDefault();
+        isPlaying ? pauseSong() : playSong();
+    }
 });
 
-prevBtn.addEventListener("click", () => {
-    musicIndex = (musicIndex - 1 + allMusic.length) % allMusic.length;
+window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    playSong();
+    // 點擊頁面啟動（解決瀏覽器自動播放限制）
+    document.body.addEventListener('click', () => {
+        if (ytPlayer) ytPlayer.playVideo();
+    }, { once: true });
 });
 
-// --- 5. 時間更新與歌詞連動 ---
+function displayLyrics(lyrics) {
+    const lyricsWrapper = document.getElementById("lyrics-wrapper");
+    lyricsWrapper.innerHTML = lyrics.map(line =>
+        `<div class="lyric-line"><div class="main-text">${line.text}</div><div class="sub-text">${line.translation || ""}</div></div>`
+    ).join("");
+}
+
+// 更新進度條與歌詞捲動
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
-
     if (duration) {
-        let progressWidth = (currentTime / duration) * 100;
-        progressBar.style.width = `${progressWidth}%`;
+        document.querySelector(".progress-bar").style.width = `${(currentTime / duration) * 100}%`;
+
+        let min = Math.floor(currentTime / 60);
+        let sec = Math.floor(currentTime % 60);
+        document.querySelector(".current").innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
+
+        // 歌詞更新邏輯...
+        updateLyrics(currentTime);
     }
+});
 
-    let currentMin = Math.floor(currentTime / 60);
-    let currentSec = Math.floor(currentTime % 60);
-    if (currentSec < 10) currentSec = `0${currentSec}`;
-    musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-
-    // 歌詞滾動
-    const songLyrics = allMusic[musicIndex].lyrics;
+function updateLyrics(currentTime) {
+    const lyrics = allMusic[musicIndex].lyrics;
     let activeIndex = -1;
-    for (let i = 0; i < songLyrics.length; i++) {
-        if (currentTime >= songLyrics[i].time) activeIndex = i;
+    for (let i = 0; i < lyrics.length; i++) {
+        if (currentTime >= lyrics[i].time) activeIndex = i;
     }
-
     if (activeIndex !== -1 && activeIndex !== currentLyricIndex) {
         currentLyricIndex = activeIndex;
         const lines = document.querySelectorAll(".lyric-line");
-        const activeLine = lines[activeIndex];
         lines.forEach((line, index) => {
             if (index === activeIndex) {
                 line.classList.add("active");
-                const offset = 180 - activeLine.offsetTop;
-                lyricsWrapper.style.transform = `translateY(${offset}px)`;
+                const lyricsWrapper = document.getElementById("lyrics-wrapper");
+                lyricsWrapper.style.transform = `translateY(${180 - line.offsetTop}px)`;
             } else {
                 line.classList.remove("active");
             }
         });
     }
-});
-
-// --- 6. 輔助功能 ---
-function displayLyrics(lyrics) {
-    lyricsWrapper.innerHTML = lyrics.map(line =>
-        `<div class="lyric-line">
-            <div class="main-text">${line.text}</div>
-            <div class="sub-text">${line.translation || ""}</div>
-        </div>`
-    ).join("");
-    lyricsWrapper.style.transform = `translateY(180px)`;
 }
-
-mainAudio.addEventListener("loadedmetadata", () => {
-    let totalMin = Math.floor(mainAudio.duration / 60);
-    let totalSec = Math.floor(mainAudio.duration % 60);
-    if (totalSec < 10) totalSec = `0${totalSec}`;
-    musicDuration.innerText = `${totalMin}:${totalSec}`;
-});
-
-mainAudio.volume = volumeSlider.value;
-volumeSlider.addEventListener("input", (e) => {
-    mainAudio.volume = e.target.value;
-});
-
-progressArea.addEventListener("click", (e) => {
-    let progressWidthVal = progressArea.clientWidth;
-    let clickedOffSetX = e.offsetX;
-    mainAudio.currentTime = (clickedOffSetX / progressWidthVal) * mainAudio.duration;
-    currentLyricIndex = -1;
-    playSong();
-});
-
-mainAudio.addEventListener("ended", () => nextBtn.click());
-
-// 鍵盤操作監聽
-window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-        e.preventDefault();
-        isPlaying ? pauseSong() : playSong();
-    } else if (e.code === "ArrowLeft") {
-        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
-        currentLyricIndex = -1;
-    } else if (e.code === "ArrowRight") {
-        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
-        currentLyricIndex = -1;
-    }
-});
