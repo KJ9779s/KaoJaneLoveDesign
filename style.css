@@ -175,13 +175,14 @@ body {
     justify-content: center;
 }
 
-/* --- 音量控制區塊：物理拉長 --- */
+/* --- 音量控制區塊：物理拉長與手機觸控優化 --- */
 .volume-area {
     display: flex;
     align-items: center;
     justify-content: center;
     margin-top: 35px;
     gap: 12px;
+    padding: 10px 0; /* 增加點擊熱區 */
 }
 
     .volume-area i {
@@ -193,10 +194,24 @@ body {
     width: 200px; /* 音量條拉長，超過上方按鈕寬度 */
     cursor: pointer;
     accent-color: #fff;
-    height: 4px;
+    height: 6px; /* 手機端稍微加粗 */
     opacity: 0.6;
     transition: opacity 0.3s;
+    -webkit-appearance: none; /* 移除手機預設限制 */
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 5px;
 }
+
+    /* 針對行動端瀏覽器的滑桿按鈕優化 */
+    #volume-slider::-webkit-slider-thumb {
+        -webkit-appearance: none;
+        height: 16px;
+        width: 16px;
+        border-radius: 50%;
+        background: #fff;
+        cursor: pointer;
+        box-shadow: 0 0 5px rgba(0,0,0,0.3);
+    }
 
     #volume-slider:hover {
         opacity: 1;

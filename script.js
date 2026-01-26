@@ -261,7 +261,7 @@ let isPlaying = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
-// --- 1. YouTube API 載入與循環控制 ---
+// --- 1. YouTube API 載入與背景影片控制 ---
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -278,7 +278,7 @@ function onYouTubeIframeAPIReady() {
         events: {
             'onReady': (e) => e.target.playVideo(),
             'onStateChange': (e) => {
-                // 確保背景影片循環播放
+                // 確保背景影片持續循環播放
                 if (e.data === YT.PlayerState.ENDED) {
                     ytPlayer.seekTo(0);
                     ytPlayer.playVideo();
@@ -297,7 +297,7 @@ function loadMusic(index) {
     mainAudio.src = music.src;
     mainAudio.load();
 
-    // 背景影片同步切換
+    // 背景影片隨歌曲同步切換
     if (ytPlayer && ytPlayer.loadVideoById) {
         ytPlayer.loadVideoById({
             videoId: music.video,
@@ -335,7 +335,7 @@ function prevMusic() {
     playSong();
 }
 
-// --- 4. 事件監聽 (修正按鈕與音量控制) ---
+// --- 4. 事件監聽 (按鈕、音量與自動切換) ---
 playPauseBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     isPlaying ? pauseSong() : playSong();
@@ -344,7 +344,7 @@ playPauseBtn.addEventListener("click", (e) => {
 nextBtn.addEventListener("click", () => nextMusic());
 prevBtn.addEventListener("click", () => prevMusic());
 
-// 音量滑桿控制
+// 音量滑桿控制：同步更新音訊音量
 volumeSlider.addEventListener("input", (e) => {
     mainAudio.volume = e.target.value;
 });
@@ -352,7 +352,7 @@ volumeSlider.addEventListener("input", (e) => {
 // 自動下一首
 mainAudio.addEventListener("ended", () => nextMusic());
 
-// --- 5. 鍵盤操作監聽 (新增：左右跳轉、上下音量) ---
+// --- 5. 鍵盤操作監聽 (左右跳轉、上下音量) ---
 window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         e.preventDefault();
@@ -361,7 +361,7 @@ window.addEventListener("keydown", (e) => {
     else if (e.code === "ArrowLeft") {
         // 向左跳轉 5 秒
         mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
-        currentLyricIndex = -1; // 強制刷新歌詞位置
+        currentLyricIndex = -1;
     }
     else if (e.code === "ArrowRight") {
         // 向右跳轉 5 秒
@@ -370,34 +370,34 @@ window.addEventListener("keydown", (e) => {
     }
     else if (e.code === "ArrowUp") {
         e.preventDefault();
-        // 音量增加 0.05
+        // 音量增加 0.05，並同步更新介面滑桿
         mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
-        volumeSlider.value = mainAudio.volume; // 同步更新滑桿
+        volumeSlider.value = mainAudio.volume;
     }
     else if (e.code === "ArrowDown") {
         e.preventDefault();
-        // 音量減少 0.05
+        // 音量減少 0.05，並同步更新介面滑桿
         mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
-        volumeSlider.value = mainAudio.volume; // 同步更新滑桿
+        volumeSlider.value = mainAudio.volume;
     }
 });
 
-// --- 6. 時間更新與歌詞捲動 ---
+// --- 6. 時間更新與歌詞捲動 (修正時長顯示) ---
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
 
     if (duration) {
-        // 更新進度條
+        // 更新進度條視覺
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
 
-        // 更新當前播放時間
+        // 更新當前播放時間文字
         let curMin = Math.floor(currentTime / 60);
         let curSec = Math.floor(currentTime % 60);
         musicCurrentTime.innerText = `${curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
 
-        // 更新總長度 (解決顯示為 0:00 問題)
+        // 更新歌曲總長度文字
         let durMin = Math.floor(duration / 60);
         let durSec = Math.floor(duration % 60);
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
@@ -406,7 +406,7 @@ mainAudio.addEventListener("timeupdate", (e) => {
     }
 });
 
-// 點擊進度條跳轉
+// 點擊進度條跳轉功能
 progressArea.addEventListener("click", (e) => {
     let progressWidth = progressArea.clientWidth;
     let clickedOffsetX = e.offsetX;
@@ -414,7 +414,7 @@ progressArea.addEventListener("click", (e) => {
     playSong();
 });
 
-// --- 7. 輔助函式 ---
+// --- 7. 輔助與歌詞渲染函式 ---
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
         `<div class="lyric-line">
@@ -448,10 +448,10 @@ function updateLyrics(currentTime) {
     }
 }
 
-// 初始化
+// --- 8. 初始化與交互補償 ---
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    // 首次點擊啟動 (繞過瀏覽器限制)
+    // 解決部分移動端瀏覽器禁止自動播放影片的限制
     document.body.addEventListener('click', () => {
         if (ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
     }, { once: true });
