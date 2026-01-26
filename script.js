@@ -258,10 +258,10 @@ function onYouTubeIframeAPIReady() {
         },
         events: {
             'onReady': (e) => e.target.playVideo(),
-            // 雙重保險：當影片狀態改變時執行
             'onStateChange': (e) => {
-                // 如果影片結束 (State 0)，強制重新播放達成循環播放
+                // 強制循環：如果影片結束 (State 0)，立即跳回起點播放
                 if (e.data === YT.PlayerState.ENDED) {
+                    ytPlayer.seekTo(0);
                     ytPlayer.playVideo();
                 }
             }
@@ -286,19 +286,18 @@ function loadMusic(index) {
     displayLyrics(allMusic[index].lyrics);
 }
 
-// 播放與暫停控制（背景影片獨立，不受暫停影響）
+// 播放與暫停：背景影片獨立，不執行 pauseVideo()
 function playSong() {
     isPlaying = true;
     document.querySelector(".play-pause i").classList.replace("fa-play", "fa-pause");
     mainAudio.play();
-    // 背景影片始終播放，不在此處控制，除非你需要切換歌曲時同步
 }
 
 function pauseSong() {
     isPlaying = false;
     document.querySelector(".play-pause i").classList.replace("fa-pause", "fa-play");
     mainAudio.pause();
-    // 這裡不呼叫 ytPlayer.pauseVideo()，所以背景會繼續動
+    // 此處不執行 ytPlayer.pauseVideo()，達成背景不停效果
 }
 
 // 事件監聽
@@ -306,7 +305,7 @@ document.querySelector(".play-pause").addEventListener("click", () => {
     isPlaying ? pauseSong() : playSong();
 });
 
-// 空白鍵控制 (修正：不影響背景影片)
+// 空白鍵捷徑 (修正：不影響背景)
 window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         e.preventDefault();
@@ -316,7 +315,7 @@ window.addEventListener("keydown", (e) => {
 
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    // 點擊頁面啟動（解決瀏覽器自動播放限制）
+    // 首次交互啟動背景 (手機版瀏覽器限制)
     document.body.addEventListener('click', () => {
         if (ytPlayer) ytPlayer.playVideo();
     }, { once: true });
@@ -329,18 +328,15 @@ function displayLyrics(lyrics) {
     ).join("");
 }
 
-// 更新進度條與歌詞捲動
+// 時間更新與歌詞連動
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
     if (duration) {
         document.querySelector(".progress-bar").style.width = `${(currentTime / duration) * 100}%`;
-
         let min = Math.floor(currentTime / 60);
         let sec = Math.floor(currentTime % 60);
         document.querySelector(".current").innerText = `${min}:${sec < 10 ? '0' + sec : sec}`;
-
-        // 歌詞更新邏輯...
         updateLyrics(currentTime);
     }
 });
