@@ -1,221 +1,221 @@
 * {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: "Lora", "Noto Serif TC", "Noto Serif Thai", serif;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Lora", "Noto Serif TC", "Noto Serif Thai", serif;
 }
 
 body {
-	height: 100vh;
-	overflow: hidden;
-	background-color: #000;
+    height: 100vh;
+    overflow: hidden;
+    background-color: #000;
 }
 
 /* --- 浮水印：精確維持 18px 與 5px 間距 --- */
 .watermark {
-	position: fixed;
-	top: 25px;
-	right: 30px;
-	display: flex;
-	align-items: center;
-	gap: 5px; /* 縮小間距，讓文字貼近圖標 */
-	z-index: 100;
-	pointer-events: none;
+    position: fixed;
+    top: 25px;
+    right: 30px;
+    display: flex;
+    align-items: center;
+    gap: 5px; /* 縮小間距，讓文字貼近圖標 */
+    z-index: 100;
+    pointer-events: none;
 }
 
-	.watermark img {
-		width: 18px; /* 縮小圖標 */
-		height: 18px;
-		filter: brightness(0) invert(1) opacity(0.4);
-	}
+    .watermark img {
+        width: 18px; /* 縮小圖標 */
+        height: 18px;
+        filter: brightness(0) invert(1) opacity(0.4);
+    }
 
-	.watermark span {
-		color: rgba(255, 255, 255, 0.4);
-		font-size: 15px;
-		font-weight: 500;
-		font-family: "Lora", serif;
-		letter-spacing: 0.5px;
-	}
+    .watermark span {
+        color: rgba(255, 255, 255, 0.4);
+        font-size: 15px;
+        font-weight: 500;
+        font-family: "Lora", serif;
+        letter-spacing: 0.5px;
+    }
 
 /* --- YouTube 背景優化：物理分流減少卡頓 --- */
 #yt-player-container {
-	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-	z-index: -1;
-	pointer-events: none;
-	overflow: hidden;
-	background-color: #1a1a1a; /* 增加底色防止加載瞬間黑屏 */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+    overflow: hidden;
+    background-color: #1a1a1a; /* 增加底色防止加載瞬間黑屏 */
 }
 
 #player {
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	width: 100vw;
-	height: 100vh;
-	/* 放大比例以隱藏 YouTube 標題與 UI，並開啟硬體加速 */
-	transform: translate(-50%, -50%) scale(1.3) translateZ(0);
-	filter: brightness(0.5) blur(10px); /* 降低模糊度提升流暢感 */
-	transition: opacity 1s ease-in-out;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+    transform: translate(-50%, -50%) scale(1.5);
+    /* 將 blur(15px) 改回你想要的清晰度，例如 5px 或直接移除 */
+    filter: brightness(0.6) blur(5px);
+    transition: opacity 1s ease-in-out;
 }
 
 .main-container {
-	display: flex;
-	align-items: center;
-	justify-content: flex-start;
-	height: 100vh;
-	width: 100%;
-	padding-left: 5%;
-	gap: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    width: 100%;
+    padding-left: 5%;
+    gap: 50px;
 }
 
 /* --- 播放器卡片：優化渲染負荷 --- */
 .player-card {
-	width: 320px;
-	padding: 25px;
-	border-radius: 20px;
-	background: rgba(255, 255, 255, 0.2); /* 降低透明度提升文字清晰度 */
-	backdrop-filter: blur(10px); /* 降至 10px 大幅減輕 GPU 壓力 */
-	-webkit-backdrop-filter: blur(10px);
-	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-	border: 1px solid rgba(255, 255, 255, 0.1);
-	text-align: center;
-	color: #fff;
-	flex-shrink: 0; /* 防止版面被擠壓亂掉 */
+    width: 320px;
+    padding: 25px;
+    border-radius: 20px;
+    background: rgba(255, 255, 255, 0.2); /* 降低透明度提升文字清晰度 */
+    backdrop-filter: blur(10px); /* 降至 10px 大幅減輕 GPU 壓力 */
+    -webkit-backdrop-filter: blur(10px);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    text-align: center;
+    color: #fff;
+    flex-shrink: 0; /* 防止版面被擠壓亂掉 */
 }
 
 .img-area {
-	width: 100%;
-	height: 250px;
-	border-radius: 15px;
-	overflow: hidden;
+    width: 100%;
+    height: 250px;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-	.img-area img {
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-	}
+    .img-area img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
 
 .song-details .name {
-	font-size: 20px;
-	font-weight: 600;
-	margin-top: 15px;
+    font-size: 20px;
+    font-weight: 600;
+    margin-top: 15px;
 }
 
 .song-details .artist {
-	font-size: 14px;
-	color: rgba(255, 255, 255, 0.8);
+    font-size: 14px;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .progress-area {
-	height: 5px;
-	width: 100%;
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 50px;
-	cursor: pointer;
-	margin-top: 20px;
+    height: 5px;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 20px;
 }
 
 .progress-bar {
-	height: inherit;
-	width: 0%;
-	background: #fff;
-	border-radius: inherit;
+    height: inherit;
+    width: 0%;
+    background: #fff;
+    border-radius: inherit;
 }
 
 .timer {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 8px;
-	font-size: 12px;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 12px;
 }
 
 .controls {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-top: 25px;
-	font-size: 24px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 25px;
+    font-size: 24px;
 }
 
-	.controls i {
-		cursor: pointer;
-	}
+    .controls i {
+        cursor: pointer;
+    }
 
 /* 音量條：加長且透明 */
 .volume-area {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 25px;
-	gap: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 25px;
+    gap: 15px;
 }
 
 #volume-slider {
-	width: 180px;
-	cursor: pointer;
-	accent-color: #fff;
-	height: 4px;
-	opacity: 0.5;
-	transition: opacity 0.3s;
+    width: 180px;
+    cursor: pointer;
+    accent-color: #fff;
+    height: 4px;
+    opacity: 0.5;
+    transition: opacity 0.3s;
 }
 
 /* --- 歌詞區塊設定 --- */
 .lyrics-area {
-	width: 850px;
-	height: 550px;
-	overflow: hidden;
-	position: relative;
-	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-	-webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    width: 850px;
+    height: 550px;
+    overflow: hidden;
+    position: relative;
+    mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
+    -webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }
 
 #lyrics-wrapper {
-	transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-	position: relative;
-	width: 100%;
+    transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
+    position: relative;
+    width: 100%;
 }
 
 .lyric-line {
-	padding: 30px 60px;
-	opacity: 0.3;
-	transition: all 0.5s ease;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	transform: scale(0.95);
-	transform-origin: left center;
+    padding: 30px 60px;
+    opacity: 0.3;
+    transition: all 0.5s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    transform: scale(0.95);
+    transform-origin: left center;
 }
 
-	.lyric-line .main-text {
-		font-family: "Noto Serif Thai", serif;
-		color: #fff;
-		font-size: 26px;
-		line-height: 1.6;
-	}
+    .lyric-line .main-text {
+        font-family: "Noto Serif Thai", serif;
+        color: #fff;
+        font-size: 26px;
+        line-height: 1.6;
+    }
 
-	.lyric-line .sub-text {
-		font-family: "Noto Serif TC", "Lora", serif;
-		color: rgba(255, 255, 255, 0.7);
-		font-size: 18px;
-	}
+    .lyric-line .sub-text {
+        font-family: "Noto Serif TC", "Lora", serif;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 18px;
+    }
 
-	.lyric-line.active {
-		opacity: 1;
-		transform: scale(1.05);
-	}
+    .lyric-line.active {
+        opacity: 1;
+        transform: scale(1.05);
+    }
 
-		.lyric-line.active .main-text {
-			font-size: 34px;
-			font-weight: 700;
-			text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-		}
+        .lyric-line.active .main-text {
+            font-size: 34px;
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
+        }
 
-		.lyric-line.active .sub-text {
-			color: rgba(255, 255, 255, 0.95);
-			font-weight: 700;
-		}
+        .lyric-line.active .sub-text {
+            color: rgba(255, 255, 255, 0.95);
+            font-weight: 700;
+        }

@@ -273,11 +273,11 @@ function onYouTubeIframeAPIReady() {
         videoId: allMusic[musicIndex].video,
         playerVars: {
             'autoplay': 1,
-            'mute': 1,       // 必須靜音才能自動播放
-            'controls': 0,   // 隱藏控制項
+            'mute': 1,
+            'controls': 0,
             'loop': 1,
-            'modestbranding': 1,
-            'playlist': allMusic[musicIndex].video // 循環播放必備
+            'playlist': allMusic[musicIndex].video, // 關鍵：必須包含 playlist 才能循環
+            'playsinline': 1
         },
         events: {
             'onReady': (event) => {
@@ -323,14 +323,12 @@ function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
     mainAudio.play();
-    if (ytPlayer) ytPlayer.playVideo();
 }
 
 function pauseSong() {
     isPlaying = false;
     playPauseIcon.classList.replace("fa-pause", "fa-play");
     mainAudio.pause();
-    if (ytPlayer) ytPlayer.pauseVideo();
 }
 
 // --- 4. 控制項監聽 ---
