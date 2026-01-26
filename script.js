@@ -2,7 +2,7 @@
     {
         name: " วิมานเพลง | Love Design",
         artist: " Kao Supassara, Janeeyeh Methika",
-        img: "https://i.pinimg.com/736x/85/7b/da/857bda2aab209e80f20fca0fbb38391f.jpg", 
+        img: "https://i.pinimg.com/736x/85/7b/da/857bda2aab209e80f20fca0fbb38391f.jpg",
         src: "s1.mp3",
         video: "v1.mp4",
         lyrics: [
@@ -142,7 +142,7 @@
             { time: 184, text: "no one can know, and it's okay", translation: "不知道也沒關係 " },
             { time: 203.7, text: "i'll make sure you can smile the loveliest smile today", translation: "我只希望妳今天能笑 " },
             { time: 213, text: "cuz it's all okay even if this remains between us two", translation: "就算只剩我們也沒關係 " },
-            { time: 224 , text: "and i'll smile behind your back a thousand more times a day", translation: "我會在妳背後一直微笑 " },
+            { time: 224, text: "and i'll smile behind your back a thousand more times a day", translation: "我會在妳背後一直微笑 " },
             { time: 233, text: "cuz nobody knows, my love", translation: "因為沒有人知道我的愛 " },
             { time: 238, text: "no one can know, and it's okay", translation: "不知道也沒關係 " },
             { time: 248, text: " ", translation: " " },
@@ -261,59 +261,71 @@ let mainAudio = new Audio();
 let isPlaying = false;
 let currentLyricIndex = -1;
 
-// 初始化設定
-mainAudio.preload = "auto"; // 讓瀏覽器主動預抓音樂
-bgVideo.preload = "auto";   // 讓瀏覽器主動預抓影片
-
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    // 首次點擊畫面觸發播放，避免瀏覽器攔截
     document.body.addEventListener('click', () => {
         if (!isPlaying && mainAudio.paused) playSong();
     }, { once: true });
 });
 
-// 音量邏輯
 mainAudio.volume = volumeSlider.value;
 volumeSlider.addEventListener("input", (e) => {
     mainAudio.volume = e.target.value;
 });
 
-// 載入音樂與影片（優化緩衝）
+// 鍵盤操作監聽 (空白鍵暫停、左右跳轉、上下音量)
+window.addEventListener("keydown", (e) => {
+    if (e.code === "Space") {
+        e.preventDefault();
+        isPlaying ? pauseSong() : playSong();
+    }
+    else if (e.code === "ArrowLeft") {
+        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
+        currentLyricIndex = -1;
+    }
+    else if (e.code === "ArrowRight") {
+        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
+        currentLyricIndex = -1;
+    }
+    else if (e.code === "ArrowUp") {
+        e.preventDefault();
+        mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
+        volumeSlider.value = mainAudio.volume;
+    }
+    else if (e.code === "ArrowDown") {
+        e.preventDefault();
+        mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
+        volumeSlider.value = mainAudio.volume;
+    }
+});
+
 function loadMusic(index) {
     musicName.innerText = allMusic[index].name;
     musicArtist.innerText = allMusic[index].artist;
     musicImg.src = allMusic[index].img;
-
-    // 解決切換黑屏：先暫停並重新設定來源
     mainAudio.src = allMusic[index].src;
     bgVideo.src = allMusic[index].video;
-
-    mainAudio.load();
-    bgVideo.load();
-
-    // 監聽影片是否準備好播放，避免跳轉卡頓
-    bgVideo.oncanplay = () => {
-        if (isPlaying) bgVideo.play();
-    };
-
     currentLyricIndex = -1;
     displayLyrics(allMusic[index].lyrics);
+    bgVideo.load();
+    mainAudio.load();
+}
+
+function displayLyrics(lyrics) {
+    lyricsWrapper.innerHTML = lyrics.map(line =>
+        `<div class="lyric-line">
+            <div class="main-text">${line.text}</div>
+            <div class="sub-text">${line.translation || ""}</div>
+        </div>`
+    ).join("");
+    lyricsWrapper.style.transform = `translateY(180px)`;
 }
 
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
-
-    // 使用 Promise 處理播放請求，減少報錯
-    const audioPromise = mainAudio.play();
-    if (audioPromise !== undefined) {
-        audioPromise.then(() => {
-            bgVideo.play();
-        }).catch(error => {
-            console.log("等待用戶互動中...");
-        });
-    }
+    mainAudio.play();
+    bgVideo.play();
 }
 
 function pauseSong() {
@@ -323,7 +335,6 @@ function pauseSong() {
     bgVideo.pause();
 }
 
-// 控制邏輯
 playPauseBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     isPlaying ? pauseSong() : playSong();
@@ -341,28 +352,22 @@ prevBtn.addEventListener("click", () => {
     playSong();
 });
 
-// 時間更新與歌詞滾動
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
-
     if (duration) {
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
     }
-
     let currentMin = Math.floor(currentTime / 60);
     let currentSec = Math.floor(currentTime % 60);
     if (currentSec < 10) currentSec = `0${currentSec}`;
     musicCurrentTime.innerText = `${currentMin}:${currentSec}`;
-
-    // 歌詞同步邏輯
     const songLyrics = allMusic[musicIndex].lyrics;
     let activeIndex = -1;
     for (let i = 0; i < songLyrics.length; i++) {
         if (currentTime >= songLyrics[i].time) activeIndex = i;
     }
-
     if (activeIndex !== -1 && activeIndex !== currentLyricIndex) {
         currentLyricIndex = activeIndex;
         const lines = document.querySelectorAll(".lyric-line");
@@ -379,35 +384,19 @@ mainAudio.addEventListener("timeupdate", (e) => {
     }
 });
 
-// 點擊進度條跳轉
+mainAudio.addEventListener("loadedmetadata", () => {
+    let totalMin = Math.floor(mainAudio.duration / 60);
+    let totalSec = Math.floor(mainAudio.duration % 60);
+    if (totalSec < 10) totalSec = `0${totalSec}`;
+    musicDuration.innerText = `${totalMin}:${totalSec}`;
+});
+
 progressArea.addEventListener("click", (e) => {
     let progressWidthVal = progressArea.clientWidth;
     let clickedOffSetX = e.offsetX;
     mainAudio.currentTime = (clickedOffSetX / progressWidthVal) * mainAudio.duration;
-    currentLyricIndex = -1; // 重設歌詞位置
+    currentLyricIndex = -1;
+    playSong();
 });
 
 mainAudio.addEventListener("ended", () => nextBtn.click());
-
-// 鍵盤操作監聽
-window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-        e.preventDefault();
-        isPlaying ? pauseSong() : playSong();
-    } else if (e.code === "ArrowLeft") {
-        mainAudio.currentTime -= 5;
-    } else if (e.code === "ArrowRight") {
-        mainAudio.currentTime += 5;
-    }
-});
-
-// 歌詞渲染
-function displayLyrics(lyrics) {
-    lyricsWrapper.innerHTML = lyrics.map(line =>
-        `<div class="lyric-line">
-            <div class="main-text">${line.text}</div>
-            <div class="sub-text">${line.translation || ""}</div>
-        </div>`
-    ).join("");
-    lyricsWrapper.style.transform = `translateY(180px)`;
-}

@@ -11,22 +11,20 @@ body {
 	background-color: #000;
 }
 
-/* --- 浮水印調整：更精小且貼近 --- */
+/* --- 浮水印：精緻小巧且貼近 --- */
 .watermark {
 	position: fixed;
 	top: 25px;
 	right: 30px;
 	display: flex;
 	align-items: center;
-	gap: 5px; /* 縮小間距，讓文字貼近圖標 */
+	gap: 5px; /* 貼近感 */
 	z-index: 100;
-	pointer-events: none;
 }
 
 	.watermark img {
-		width: 18px; /* 縮小圖標 */
+		width: 18px; /* 縮小尺寸 */
 		height: 18px;
-		/* 強制將黑色圖標轉為半透明白色 */
 		filter: brightness(0) invert(1) opacity(0.4);
 	}
 
@@ -34,10 +32,9 @@ body {
 		color: rgba(255, 255, 255, 0.4);
 		font-size: 15px;
 		font-weight: 500;
-		font-family: "Lora", serif;
-		letter-spacing: 0.5px;
 	}
 
+/* --- 背景影片：硬體加速與防止黑屏 --- */
 #bg-video {
 	position: fixed;
 	top: 0;
@@ -46,7 +43,10 @@ body {
 	height: 100%;
 	object-fit: cover;
 	z-index: -1;
-	filter: brightness(0.75);
+	background-color: #1a1a1a; /* 底色防止黑屏 */
+	filter: brightness(0.6);
+	transform: translateZ(0); /* 開啟硬體加速 */
+	transition: opacity 0.8s ease-in-out;
 }
 
 .main-container {
@@ -63,14 +63,13 @@ body {
 	width: 320px;
 	padding: 25px;
 	border-radius: 20px;
-	background: rgba(255, 255, 255, 0.25);
-	backdrop-filter: blur(20px);
-	-webkit-backdrop-filter: blur(20px);
+	background: rgba(255, 255, 255, 0.2);
+	backdrop-filter: blur(10px); /* 降至 10px 提升流暢度 */
+	-webkit-backdrop-filter: blur(10px);
 	box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
-	border: 1px solid rgba(255, 255, 255, 0.15);
+	border: 1px solid rgba(255, 255, 255, 0.1);
 	text-align: center;
 	color: #fff;
-	flex-shrink: 0;
 }
 
 .img-area {
@@ -86,122 +85,19 @@ body {
 		object-fit: cover;
 	}
 
-.song-details .name {
-	font-size: 20px;
-	font-weight: 600;
-	margin-top: 15px;
-}
-
-.song-details .artist {
-	font-size: 14px;
-	color: rgba(255, 255, 255, 0.8);
-}
-
-.progress-area {
-	height: 5px;
-	width: 100%;
-	background: rgba(255, 255, 255, 0.2);
-	border-radius: 50px;
-	cursor: pointer;
-	margin-top: 20px;
-}
-
-.progress-bar {
-	height: inherit;
-	width: 0%;
-	background: #fff;
-	border-radius: inherit;
-}
-
-.timer {
-	display: flex;
-	justify-content: space-between;
-	margin-top: 8px;
-	font-size: 12px;
-}
-
-.controls {
-	display: flex;
-	justify-content: space-around;
-	align-items: center;
-	margin-top: 25px;
-	font-size: 24px;
-}
-
-	.controls i {
-		cursor: pointer;
-	}
-
-/* 音量條：加長且透明 */
-.volume-area {
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	margin-top: 25px;
-	gap: 15px;
-}
-
 #volume-slider {
-	width: 180px;
-	cursor: pointer;
+	width: 180px; /* 拉長滑桿 */
 	accent-color: #fff;
-	height: 4px;
 	opacity: 0.5;
-	transition: opacity 0.3s;
 }
 
-/* 歌詞區塊設定：防止截斷 */
 .lyrics-area {
 	width: 850px;
 	height: 550px;
 	overflow: hidden;
-	position: relative;
 	mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
-	-webkit-mask-image: linear-gradient(to bottom, transparent, black 15%, black 85%, transparent);
 }
 
 #lyrics-wrapper {
 	transition: transform 0.6s cubic-bezier(0.23, 1, 0.32, 1);
-	position: relative;
-	width: 100%;
 }
-
-.lyric-line {
-	padding: 30px 60px;
-	opacity: 0.3;
-	transition: all 0.5s ease;
-	display: flex;
-	flex-direction: column;
-	gap: 10px;
-	transform: scale(0.95);
-	transform-origin: left center;
-}
-
-	.lyric-line .main-text {
-		font-family: "Noto Serif Thai", serif;
-		color: #fff;
-		font-size: 26px;
-		line-height: 1.6;
-	}
-
-	.lyric-line .sub-text {
-		font-family: "Noto Serif TC", "Lora", serif;
-		color: rgba(255, 255, 255, 0.7);
-		font-size: 18px;
-	}
-
-	.lyric-line.active {
-		opacity: 1;
-		transform: scale(1.05);
-	}
-
-		.lyric-line.active .main-text {
-			font-size: 34px;
-			font-weight: 700;
-			text-shadow: 0 0 20px rgba(255, 255, 255, 0.4);
-		}
-
-		.lyric-line.active .sub-text {
-			color: rgba(255, 255, 255, 0.95);
-			font-weight: 700;
-		}
