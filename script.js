@@ -106,7 +106,11 @@
             { time: 183.9, text: "la la la...", translation: " " },
             { time: 203, text: " ", translation: " " },
             { time: 204, text: " ", translation: " " },
-            { time: 205, text: " ", translation: " " }
+            { time: 205, text: " ", translation: " " },
+            { time: 206, text: " ", translation: " " },
+            { time: 207, text: " ", translation: " " },
+            { time: 208, text: " ", translation: " " },
+            { time: 209, text: " ", translation: " " }
         ]
     },
     {
@@ -147,7 +151,11 @@
             { time: 238, text: "no one can know, and it's okay", translation: "不知道也沒關係 " },
             { time: 248, text: " ", translation: " " },
             { time: 250, text: " ", translation: " " },
-            { time: 251, text: " ", translation: " " }
+            { time: 251, text: " ", translation: " " },
+            { time: 252, text: " ", translation: " " },
+            { time: 253, text: " ", translation: " " },
+            { time: 254, text: " ", translation: " " },
+            { time: 255, text: " ", translation: " " }
         ]
     },
     {
@@ -188,7 +196,10 @@
             { time: 144.5, text: "ให้รักเธออย่างฉัน  ", translation: "像我這般愛妳 " },
             { time: 148, text: " ", translation: " " },
             { time: 149, text: " ", translation: " " },
-            { time: 150, text: " ", translation: " " }
+            { time: 150, text: " ", translation: " " },
+            { time: 151, text: " ", translation: " " },
+            { time: 152, text: " ", translation: " " },
+            { time: 153, text: " ", translation: " " }
 
         ]
     },
@@ -230,12 +241,63 @@
             { time: 142.5, text: "This year To save me from tears ", translation: "今年 可以免我流淚了吧 " },
             { time: 146.9, text: "I'll give it to someone special ", translation: "因為我會把它交給另一個特別的人 " },
             { time: 151, text: "A face on a lover with a fire in his heart ", translation: "面對戀人 火花 人影 面紗 " },
-            { time: 156.5, text: "A man under cover buy you tore him apart ", translation: "各樣的陰影 " },
+            { time: 156.5, text: "A man under cover buy you tore him apart ", translation: "刻意掩飾 妳卻將我拆穿 " },
             { time: 165.8, text: "I'll give it to someone ", translation: "我會把心交給別人 " },
             { time: 168.3, text: "I'll give it to someone special ", translation: "交給另一個特別的人 " },
             { time: 175, text: " ", translation: " " },
             { time: 176, text: " ", translation: " " },
             { time: 177, text: " ", translation: " " },
+            { time: 178, text: " ", translation: " " },
+            { time: 179, text: " ", translation: " " },
+            { time: 180, text: " ", translation: " " }
+
+        ]
+    },
+    {
+        name: "ฝากใจ | 寄託心意",
+        artist: "Janeeyeh Methika",
+        img: "https://i.pinimg.com/736x/bc/55/2b/bc552b4db500d5cb62fc44ae714a51b9.jpg",
+        src: "s6.mp3",
+        video: "tCo0VPlzyKE",
+        lyrics: [
+            { time: 0, text: "( 前奏 ) ", translation: " " },
+            { time: 24.9, text: "เธอชอบพูดว่าเธอนั้นโชคดี ที่ชีวิตได้พบเจอกับฉัน", translation: "妳總喜歡說自己很幸運 生命中遇見了我" },
+            { time: 33, text: "แต่รู้บ้างหรือเปล่าว่าฉันโชคดีกว่า ที่ได้รับความรักจากเธอ", translation: "但妳知道嗎 我才更幸運 能夠得到妳的愛 " },
+            { time: 42.2, text: "เธอชอบพูดว่าเธอไม่เข้าใจ ว่าฉันนั้นชอบเธอที่ตรงไหน", translation: "妳總喜歡說自己不明白 我喜歡妳哪一點" },
+            { time: 50.5, text: "ก็ชอบที่เป็นเธอ แค่เธอเป็นเธอก็พอแล้ว", translation: "就喜歡這樣的妳 只要妳做自己就足夠了" },
+            { time: 59.6, text: "ฉันก็ไม่รู้ว่าอนาคตเป็นอย่างไร จะไม่นึกย้อนเสียใจ", translation: "我也不知道未來會怎麼樣 不想回想後悔" },
+            { time: 66, text: "เลือกกี่ครั้งก็เหมือนเดิม ใจฉันเลือกเธอไปแล้ว", translation: "無論做幾次選擇都一樣 我的心選擇妳了" },
+            { time: 74.5, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 83, text: "ฉันไม่อ้อนวอน อะไรเธอมากมาย", translation: "我不懇求妳太多太多" },
+            { time: 88, text: "แค่ช่วยอยู่กับฉันตลอดไป", translation: "但求妳永遠和我在一起" },
+            { time: 91.5, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 100, text: "ขอเธอไม่ลืม ขอให้เธอจดจำไว้", translation: "求妳別忘記 希望妳銘記於心" },
+            { time: 105.4, text: "จากนี้ หัวใจฉันอยู่ที่เธอแล้ว", translation: "從今往后 我的心已屬於妳了" },
+            { time: 111.7, text: "(間奏)", translation: "" },
+            { time: 119.5, text: "เธอรู้ไหมที่แท้โชคชะตา ก็แค่พาเธอพบเจอกับฉัน", translation: "妳知道嗎 其實命運就只是指引妳我相遇" },
+            { time: 128, text: "แต่ที่เรารักกัน มันเกิดขึ้นได้เพราะฉันกับเธอ", translation: "但我們愛上彼此 那是因為妳我的心意相通" },
+            { time: 136.5, text: "ฉันก็ไม่รู้ว่าอนาคตเป็นอย่างไร จะไม่นึกย้อนเสียใจ", translation: "我也不知道未來會怎麼樣 不想回想後悔" },
+            { time: 143.3, text: "เลือกกี่ครั้งก็เหมือนเดิม ใจฉันเลือกเธอไปแล้ว", translation: "無論做幾次選擇都一樣 我的心選擇妳了" },
+            { time: 151.2, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 160, text: "ฉันไม่อ้อนวอน อะไรเธอมากมาย", translation: "我不懇求妳太多太多" },
+            { time: 165, text: "แค่ช่วยอยู่กับฉันตลอดไป", translation: "但求妳永遠和我在一起" },
+            { time: 168.9, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 177.5, text: "ขอเธอไม่ลืม ขอให้เธอจดจำไว้", translation: "求妳別忘記 希望妳銘記於心" },
+            { time: 182.3, text: "จากนี้ หัวใจฉันอยู่ที่เธอแล้ว", translation: "從今往后 我的心已屬於妳了" },
+            { time: 191.5, text: "ฉันขอสัญญาว่าจะไม่ไปไหน", translation: "我發誓會不離不棄" },
+            { time: 196, text: "เธอไม่ต้องกลัวว่าฉันจะหายไป", translation: "妳不必擔心我會消失不見 " },
+            { time: 200, text: "ฉันพร้อมและมอบหัวใจฉันฝากไว้ที่เธอแล้ว", translation: "我準備獻出全心全意 寄託於妳" },
+            { time: 208.8, text: "ฉันขอสัญญาว่าจะไม่ไปไหน", translation: "我發誓會不離不棄" },
+            { time: 213, text: "เธอไม่ต้องกลัวว่าฉันจะหายไป", translation: "妳不必擔心我會消失不見 " },
+            { time: 217.3, text: "ฉันพร้อมและมอบหัวใจฉันฝากไว้ที่เธอแล้ว", translation: "我準備獻出全心全意 寄託於妳" },
+            { time: 226.9, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 235.2, text: "ฉันไม่อ้อนวอน อะไรเธอมากมาย", translation: "我不懇求妳太多太多" },
+            { time: 240, text: "แค่ช่วยอยู่กับฉันตลอดไป", translation: "但求妳永遠和我在一起" },
+            { time: 243.8, text: "ฝากใจฉันไว้ที่เธอ ฝากให้เธอช่วยดูแล", translation: "我的心寄託於妳 請妳替我好好照顧" },
+            { time: 252.3, text: "ขอเธอไม่ลืม ขอให้เธอจดจำไว้", translation: "求妳別忘記 希望妳銘記於心" },
+            { time: 257.3, text: "จากนี้ หัวใจฉันอยู่ที่เธอแล้ว", translation: "從今往後 我的心已屬於妳了" },
+            { time: 264, text: "( 私心最愛 小葉有那麼一刻把自己唱進去了吧...) ", translation: " " },
+            { time: 276.1, text: "หัวใจฉันอยู่ที่เธอแล้ว", translation: "我的心已屬於妳了" },
 
         ]
     }
@@ -261,7 +323,6 @@ let isPlaying = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
-// --- 1. YouTube API 載入與背景影片控制 ---
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
 var firstScriptTag = document.getElementsByTagName('script')[0];
@@ -271,14 +332,23 @@ function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player('player', {
         videoId: allMusic[musicIndex].video,
         playerVars: {
-            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 1,
+            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 0, 
             'playlist': allMusic[musicIndex].video,
             'playsinline': 1, 'modestbranding': 1, 'rel': 0
         },
         events: {
-            'onReady': (e) => e.target.playVideo(),
+            'onReady': (e) => {
+                e.target.playVideo();
+                setInterval(() => {
+                    const duration = ytPlayer.getDuration();
+                    const currentTime = ytPlayer.getCurrentTime();
+                    if (duration > 0 && (duration - currentTime) < 0.5) {
+                        ytPlayer.seekTo(0);
+                        ytPlayer.playVideo();
+                    }
+                }, 100);
+            },
             'onStateChange': (e) => {
-                // 確保背景影片持續循環播放
                 if (e.data === YT.PlayerState.ENDED) {
                     ytPlayer.seekTo(0);
                     ytPlayer.playVideo();
@@ -287,8 +357,6 @@ function onYouTubeIframeAPIReady() {
         }
     });
 }
-
-// --- 2. 歌曲載入與同步功能 ---
 function loadMusic(index) {
     const music = allMusic[index];
     musicName.innerText = music.name;
@@ -297,7 +365,6 @@ function loadMusic(index) {
     mainAudio.src = music.src;
     mainAudio.load();
 
-    // 背景影片隨歌曲同步切換
     if (ytPlayer && ytPlayer.loadVideoById) {
         ytPlayer.loadVideoById({
             videoId: music.video,
@@ -305,12 +372,10 @@ function loadMusic(index) {
             startSeconds: 0
         });
     }
-
     currentLyricIndex = -1;
     displayLyrics(music.lyrics);
 }
 
-// --- 3. 播放控制邏輯 ---
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
@@ -335,7 +400,6 @@ function prevMusic() {
     playSong();
 }
 
-// --- 4. 事件監聽 (按鈕、音量與自動切換) ---
 playPauseBtn.addEventListener("click", (e) => {
     e.stopPropagation();
     isPlaying ? pauseSong() : playSong();
@@ -344,69 +408,63 @@ playPauseBtn.addEventListener("click", (e) => {
 nextBtn.addEventListener("click", () => nextMusic());
 prevBtn.addEventListener("click", () => prevMusic());
 
-// 音量滑桿控制：同步更新音訊音量
 volumeSlider.addEventListener("input", (e) => {
     mainAudio.volume = e.target.value;
 });
 
-// 自動下一首
 mainAudio.addEventListener("ended", () => nextMusic());
 
-// --- 5. 鍵盤操作監聽 (左右跳轉、上下音量) ---
 window.addEventListener("keydown", (e) => {
     if (e.code === "Space") {
         e.preventDefault();
         isPlaying ? pauseSong() : playSong();
     }
     else if (e.code === "ArrowLeft") {
-        // 向左跳轉 5 秒
         mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
         currentLyricIndex = -1;
     }
     else if (e.code === "ArrowRight") {
-        // 向右跳轉 5 秒
         mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
         currentLyricIndex = -1;
     }
     else if (e.code === "ArrowUp") {
         e.preventDefault();
-        // 音量增加 0.05，並同步更新介面滑桿
         mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
         volumeSlider.value = mainAudio.volume;
     }
     else if (e.code === "ArrowDown") {
         e.preventDefault();
-        // 音量減少 0.05，並同步更新介面滑桿
         mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
         volumeSlider.value = mainAudio.volume;
     }
 });
 
-// --- 6. 時間更新與歌詞捲動 (修正時長顯示) ---
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
 
     if (duration) {
-        // 更新進度條視覺
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
 
-        // 更新當前播放時間文字
         let curMin = Math.floor(currentTime / 60);
         let curSec = Math.floor(currentTime % 60);
         musicCurrentTime.innerText = `${curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
 
-        // 更新歌曲總長度文字
         let durMin = Math.floor(duration / 60);
         let durSec = Math.floor(duration % 60);
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
 
         updateLyrics(currentTime);
+
+        if ((currentTime / duration) > 0.8) {
+            let nextIndex = (musicIndex + 1) % allMusic.length;
+            let preloadAudio = new Audio();
+            preloadAudio.src = allMusic[nextIndex].src;
+            preloadAudio.preload = "auto"; 
+        }
     }
 });
-
-// 點擊進度條跳轉功能
 progressArea.addEventListener("click", (e) => {
     let progressWidth = progressArea.clientWidth;
     let clickedOffsetX = e.offsetX;
@@ -414,7 +472,6 @@ progressArea.addEventListener("click", (e) => {
     playSong();
 });
 
-// --- 7. 輔助與歌詞渲染函式 ---
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
         `<div class="lyric-line">
@@ -439,7 +496,7 @@ function updateLyrics(currentTime) {
         lines.forEach((line, index) => {
             if (index === activeIndex) {
                 line.classList.add("active");
-                const offset = 180 - activeLine.offsetTop;
+                const offset = 200 - activeLine.offsetTop;
                 lyricsWrapper.style.transform = `translateY(${offset}px)`;
             } else {
                 line.classList.remove("active");
@@ -448,11 +505,10 @@ function updateLyrics(currentTime) {
     }
 }
 
-// --- 8. 初始化與交互補償 ---
 window.addEventListener("load", () => {
     loadMusic(musicIndex);
-    // 解決部分移動端瀏覽器禁止自動播放影片的限制
     document.body.addEventListener('click', () => {
         if (ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
     }, { once: true });
 });
+
