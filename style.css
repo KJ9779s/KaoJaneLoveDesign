@@ -263,16 +263,16 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.6);
-    backdrop-filter: blur(5px);
-    display: none;
+    background: rgba(0, 0, 0, 0.8); 
+    backdrop-filter: blur(10px); 
+    -webkit-backdrop-filter: blur(10px);
+    display: none
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    z-index: 5;
+    z-index: 20;
     border-radius: 15px;
-    color: #fff;
-    gap: 15px;
+    pointer-events: none;
 }
 
 .loader {
@@ -321,12 +321,24 @@ body {
         left: 0;
         bottom: -100%;
         width: 100%;
-        height: 70vh;
+        height: 75vh;
         border-radius: 25px 25px 0 0;
+        touch-action: pan-y;
     }
     .music-list.show {
         bottom: 0;
         box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+    }
+    .volume-area {
+        display: none;
+    }
+    .music-list ul li:hover {
+        background: transparent !important;
+        transition: none;
+    }
+    .music-list ul li.playing {
+       background: rgba(255, 255, 255, 0.15) !important;
+       border-left: 4px solid #fff;
     }
 }
 
@@ -377,6 +389,7 @@ body {
     cursor: pointer;
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: all 0.2s ease;
+    user-select: none;
 }
 
 .music-list ul li:hover {
@@ -421,16 +434,21 @@ body {
 }
 
 .sortable-ghost {
-    opacity: 0.4;
-    background: rgba(255, 255, 255, 0.1);
+    opacity: 0.1;
+    background: rgba(255, 255, 255, 0.2);
 }
 
 .drag-handle {
-    margin-right: 15px; 
-    font-size: 16px;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
     opacity: 0.4;
     cursor: grab;
-    flex-shrink: 0; 
+    flex-shrink: 0;
+    touch-action: none;
 }
 .drag-handle:active {
     cursor: grabbing;

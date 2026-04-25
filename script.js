@@ -645,8 +645,7 @@ function initList() {
     ulTag.innerHTML = "";
     allMusic.forEach((music, index) => {
         let liTag = `<li li-index="${index}">
-                        <i class="fas fa-bars drag-handle"></i>
-                        <div class="row">
+                        <i class="fas fa-bars drag-handle"></i> <div class="row">
                             <span>${music.name}</span>
                             <p>${music.artist}</p>
                         </div>
@@ -670,9 +669,11 @@ function initList() {
             handle: '.drag-handle',
             animation: 150,
             ghostClass: 'sortable-ghost',
+            forceFallback: true,
+            fallbackOnBody: true,
+            swapThreshold: 0.65,
             onEnd: function (evt) {
                 const currentPlayingName = allMusic[musicIndex].name;
-
                 const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
                 allMusic.splice(evt.newIndex, 0, movedItem);
 
@@ -682,15 +683,11 @@ function initList() {
                 });
 
                 musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
-
                 currentLyricIndex = -1; 
-                
-                console.log("排序完畢，目前播放索引修正為：" + musicIndex);
             },
         });
     }
 }
-
 function playingNow() {
     const allLiTags = ulTag.querySelectorAll("li");
     allLiTags.forEach(li => {
@@ -734,6 +731,10 @@ function loadMusic(index) {
     musicArtist.innerText = music.artist;
     
     musicImg.onload = () => {
+        loadingOverlay.style.display = "none";
+    };
+
+    musicImg.onerror = () => {
         loadingOverlay.style.display = "none";
     };
     
