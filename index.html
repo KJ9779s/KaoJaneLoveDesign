@@ -1,64 +1,89 @@
 ﻿<!DOCTYPE html>
 <html lang="zh-TW">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>不是設計愛情 是設計我</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+	<head>
+		<meta charset="UTF-8">
+			<meta name="viewport" content="width=device-width, initial-scale=1.0">
+				<title>不是設計愛情 是設計我</title>
+				<link rel="stylesheet" href="style.css">
+					<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
-<body>
-    <div class="watermark">
-        <img src="threads.png">
-        <span>kjsy97</span>
-    </div>
+	<body>
+		<div class="watermark">
+			<img src="threads.png">
+				<span>kjsy97</span>
+			</div>
 
-    <div id="yt-player-container">
-        <div id="player"></div>
-    </div>
+		<div id="yt-player-container">
+			<div id="player"></div>
+		</div>
 
-    <div class="main-container">
-        <div class="wrapper">
-            <div class="player-card">
-                <div class="img-area">
-                    <div id="loading-overlay" class="loading-overlay">
-                        <div class="loader"></div>
-                        <span>Loading...</span>
-                    </div>
-                    <img src="" alt="Music Cover" id="main-img">
+		<div class="main-container">
+			<div class="wrapper">
+				<div class="player-card">
+					<div class="img-area">
+						<div id="loading-overlay" class="loading-overlay">
+							<div class="loader"></div>
+							<span>Loading...</span>
+						</div>
+						<img src="" alt="Music Cover" id="main-img">
                 </div>
-                <div class="song-details">
-                    <p class="name"></p>
-                    <p class="artist"></p>
-                </div>
-                <div class="progress-area">
-                    <div class="progress-bar"></div>
-                    <div class="timer">
-                        <span class="current">0:00</span>
-                        <span class="duration">0:00</span>
-                    </div>
-                </div>
-                <div class="controls">
-                    <i id="prev" class="fas fa-step-backward"></i>
-                    <div class="play-pause">
-                        <i class="fas fa-play"></i>
-                    </div>
-                    <i id="next" class="fas fa-step-forward"></i>
-                </div>
-                <div class="volume-area">
-                    <i class="fas fa-volume-up"></i>
-                    <input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
-                </div>
-            </div>
-        </div>
 
-        <div class="lyrics-area">
-            <div id="lyrics-wrapper">
-                </div>
-        </div>
-    </div>
+					<div class="song-details">
+						<p class="name"></p>
+						<p class="artist"></p>
+					</div>
 
-    <script src="music-list.js"></script>
-    <script src="script.js"></script>
-</body>
-</html> ssdasaSD
+					<div class="progress-area">
+						<div class="progress-bar"></div>
+						<div class="timer">
+							<span class="current">0:00</span>
+							<span class="duration">0:00</span>
+						</div>
+					</div>
+
+					<div class="controls">
+						<div id="repeat-plist" class="repeat-btn-container" title="單曲循環">
+							<i class="fas fa-redo-alt"></i>
+							<span class="repeat-one">1</span>
+						</div>
+
+						<i id="prev" class="fas fa-step-backward"></i>
+
+						<div class="play-pause">
+							<i class="fas fa-play"></i>
+						</div>
+
+						<i id="next" class="fas fa-step-forward"></i>
+
+						<i id="show-list" class="fas fa-list"></i>
+					</div>
+
+					<div class="volume-area">
+						<i class="fas fa-volume-up"></i>
+						<input type="range" id="volume-slider" min="0" max="1" step="0.01" value="0.5">
+                </div>
+				</div>
+			</div>
+
+			<div class="lyrics-area">
+				<div id="lyrics-wrapper"></div>
+			</div>
+
+			<div class="music-list">
+				<div class="header">
+					<div class="row">
+						<i class="fas fa-list"></i>
+						<span>播放清單</span>
+					</div>
+					<i id="close-list" class="fas fa-times"></i>
+				</div>
+				<ul>
+				</ul>
+			</div>
+		</div>
+
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+		<script src="music-list.js"></script>
+		<script src="script.js"></script>
+	</body>
+</html>

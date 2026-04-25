@@ -460,6 +460,57 @@
         ]
     },
     {
+        name: "有妳在",
+        artist: "Kao Supassara",
+        img: "https://i.pinimg.com/736x/5f/eb/f9/5febf946bdb2add0fc4a01182a4512ac.jpg",
+        src: "s10.mp3",
+        video: "moEJJtx375I",
+        lyrics: [
+            { time: 0, text: "Baby you are my light", translation: " " },
+            { time: 4, text: "妳點亮我的愛", translation: " " },
+            { time: 8.5, text: "forever shine", translation: " " },
+            { time: 10.4, text: "命中註定的安排", translation: " " },
+            { time: 13.2, text: "我明白", translation: " " },
+            { time: 16.8, text: "第一次見面妳的開場白", translation: " " },
+            { time: 20.8, text: "沒有彩排 但卻意外可愛", translation: " " },
+            { time: 23.9, text: "晚風吹過來 霧氣散開", translation: " " },
+            { time: 27.9, text: "眼神在交換", translation: " " },
+            { time: 31.7, text: "我世界按部就班的狀態", translation: " " },
+            { time: 35.1, text: "遇見妳的瞬間 明亮起來", translation: " " },
+            { time: 38.8, text: "烏雲都散開 沒什麼陰霾", translation: " " },
+            { time: 42.7, text: "有妳在", translation: " " },
+            { time: 44.2, text: "Baby you are my light", translation: " " },
+            { time: 47.9, text: "妳點亮我的愛", translation: " " },
+            { time: 52.3, text: "forever shine", translation: " " },
+            { time: 54.5, text: "命中註定的安排", translation: " " },
+            { time: 57.1, text: "我明白", translation: " " },
+            { time: 58.9, text: "流星劃過窗臺", translation: " " },
+            { time: 62.7, text: "抹上極光的色彩", translation: " " },
+            { time: 67.2, text: "妳的存在 把我的夜空填滿", translation: " " },
+            { time: 71.9, text: "多絢爛 煙花在盛開", translation: " " },
+            { time: 79.4, text: "銀河裡星星彼此在呢喃", translation: " " },
+            { time: 82.9, text: "只要妳和我輕輕抬頭看", translation: " " },
+            { time: 87.1, text: "就能把愛 全部裝進宇宙的口袋", translation: " " },
+            { time: 94, text: "晚風吹走我的遲疑躲閃", translation: " " },
+            { time: 97.7, text: "月光灑下只想對妳依賴", translation: " " },
+            { time: 100.8, text: "夜色很浪漫 時間變很慢", translation: " " },
+            { time: 104.9, text: "有妳在", translation: " " },
+            { time: 106.6, text: "Baby you are my light", translation: " " },
+            { time: 110, text: "妳點亮我的愛", translation: " " },
+            { time: 115, text: "forever shine", translation: " " },
+            { time: 116.8, text: "命中註定的安排", translation: " " },
+            { time: 119.5, text: "我明白", translation: " " },
+            { time: 121.5, text: "流星劃過窗臺", translation: " " },
+            { time: 125, text: "抹上極光的色彩", translation: " " },
+            { time: 129.2, text: "妳的存在 把我的夜空填滿", translation: " " },
+            { time: 134.2, text: "多絢爛 煙花在盛開", translation: " " },
+            { time: 144.2, text: "不再孤單 朝著約定的彼岸", translation: " " },
+            { time: 148.8, text: "我明白 愛早已到來", translation: " " }
+
+
+        ]
+    },
+    {
         name: "理想情人",
         artist: "Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/ab/70/64/ab7064fab9c6c4c94f24fc5b99ac945b.jpg",
@@ -505,6 +556,61 @@
 
 
         ]
+    },
+    {
+        name: "愛妳但說不出口",
+        artist: "Janeeyeh Methika",
+        img: "https://i.pinimg.com/736x/ee/f8/b4/eef8b40261c68950c7ef0571ea165124.jpg",
+        src: "s12.mp3",
+        video: "z848y0Xxf5o",
+        lyrics: [
+            { time: 0, text: "( 前奏 ) ", translation: " " },
+            { time: 16, text: "寶貝 今晚的我有點醉", translation: " " },
+            { time: 22.1, text: "別理會妳聽的 那些謊話", translation: " " },
+            { time: 26, text: "我沒辦法", translation: " " },
+            { time: 28.1, text: "把真相都證明給妳啊", translation: " " },
+            { time: 31.2, text: "So 我的寶貝", translation: " " },
+            { time: 34.1, text: "妳別看我渣也會累", translation: " " },
+            { time: 38.3, text: "脆弱的心被妳一擊就碎", translation: " " },
+            { time: 41.8, text: "So what you say？", translation: " " },
+            { time: 44.4, text: "能不能再給個機會？", translation: " " },
+            { time: 48.5, text: "誰能把妳的心 撫慰", translation: " " },
+            { time: 50.8, text: "就算天黑 我也不怕會疲憊", translation: " " },
+            { time: 56.7, text: "犯過的罪 沒人能體會", translation: " " },
+            { time: 59.8, text: "是我不對 剩自己在流淚", translation: " " },
+            { time: 64.3, text: "我想念妳", translation: " " },
+            { time: 65.8, text: "我恨自己錯過", translation: " " },
+            { time: 69.2, text: "愛妳 但說不出口", translation: " " },
+            { time: 72.5, text: "妳說太累所以是誰惹的禍", translation: " " },
+            { time: 75.9, text: "是我", translation: " " },
+            { time: 77.3, text: "愛妳 但說不出口", translation: " " },
+            { time: 80.7, text: "( 間奏 )", translation: " " },
+            { time: 88.8, text: "妳說太累所以是誰惹的禍", translation: " " },
+            { time: 91.8, text: "是我", translation: " " },
+            { time: 93.5, text: "愛妳 但說不出口", translation: " " },
+            { time: 96, text: "寶貝 今晚的我有點累", translation: " " },
+            { time: 102.2, text: "不知道該跟妳說些什麼", translation: " " },
+            { time: 105.8, text: "寫了這首歌 送給妳一個交代", translation: " " },
+            { time: 112.2, text: "誰能把妳的心 撫慰", translation: " " },
+            { time: 114.9, text: "就算天黑 我也不怕會疲憊", translation: " " },
+            { time: 120.8, text: "犯過的罪 沒人能體會", translation: " " },
+            { time: 123.8, text: "是我不對 剩自己在流淚", translation: " " },
+            { time: 128.3, text: "我想念妳", translation: " " },
+            { time: 129.8, text: "我恨自己錯過", translation: " " },
+            { time: 133.2, text: "愛妳 但說不出口", translation: " " },
+            { time: 136.7, text: "妳說太累所以是誰惹的禍", translation: " " },
+            { time: 139.7, text: "是我", translation: " " },
+            { time: 141.5, text: "愛妳 但說不出口", translation: " " },
+            { time: 146.5, text: "( 耍帥中... )", translation: " " },
+            { time: 178.5, text: "我想念妳", translation: " " },
+            { time: 179.8, text: "我恨自己錯過", translation: " " },
+            { time: 183.5, text: "愛妳 但說不出口", translation: " " },
+            { time: 186.7, text: "妳說太累所以是誰惹的禍", translation: " " },
+            { time: 189.7, text: "是我", translation: " " },
+            { time: 191.4, text: "愛妳 但說不出口", translation: " " },
+
+
+        ]
     }
 ];
 const mainContainer = document.querySelector(".main-container"),
@@ -515,19 +621,86 @@ const mainContainer = document.querySelector(".main-container"),
     playPauseIcon = mainContainer.querySelector(".play-pause i"),
     prevBtn = mainContainer.querySelector("#prev"),
     nextBtn = mainContainer.querySelector("#next"),
+    repeatBtn = mainContainer.querySelector("#repeat-plist"),
+    showListBtn = mainContainer.querySelector("#show-list"),
+    closeListBtn = mainContainer.querySelector("#close-list"),
+    musicList = mainContainer.querySelector(".music-list"),
+    ulTag = musicList.querySelector("ul"),
     progressBar = mainContainer.querySelector(".progress-bar"),
     progressArea = mainContainer.querySelector(".progress-area"),
     musicCurrentTime = mainContainer.querySelector(".current"),
     musicDuration = mainContainer.querySelector(".duration"),
     volumeSlider = mainContainer.querySelector("#volume-slider"),
     lyricsWrapper = document.getElementById("lyrics-wrapper"),
-    loadingOverlay = document.getElementById("loading-overlay"); 
+    loadingOverlay = document.getElementById("loading-overlay");
 
 let musicIndex = 0;
 let mainAudio = new Audio();
 let isPlaying = false;
+let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
+
+function initList() {
+    ulTag.innerHTML = "";
+    allMusic.forEach((music, index) => {
+        let liTag = `<li li-index="${index}">
+                        <i class="fas fa-bars drag-handle"></i>
+                        <div class="row">
+                            <span>${music.name}</span>
+                            <p>${music.artist}</p>
+                        </div>
+                    </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+    });
+
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        li.addEventListener("click", (e) => {
+            if(e.target.classList.contains('drag-handle')) return; 
+            musicIndex = parseInt(li.getAttribute("li-index"));
+            loadMusic(musicIndex);
+            playSong();
+            playingNow(); 
+        });
+    });
+
+    if (typeof Sortable !== 'undefined') {
+        new Sortable(ulTag, {
+            handle: '.drag-handle',
+            animation: 150,
+            ghostClass: 'sortable-ghost',
+            onEnd: function (evt) {
+                const currentPlayingName = allMusic[musicIndex].name;
+
+                const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
+                allMusic.splice(evt.newIndex, 0, movedItem);
+
+                const liTags = ulTag.querySelectorAll("li");
+                liTags.forEach((li, index) => {
+                    li.setAttribute("li-index", index);
+                });
+
+                musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
+
+                currentLyricIndex = -1; 
+                
+                console.log("排序完畢，目前播放索引修正為：" + musicIndex);
+            },
+        });
+    }
+}
+
+function playingNow() {
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        if (parseInt(li.getAttribute("li-index")) === musicIndex) {
+            li.classList.add("playing");
+        } else {
+            li.classList.remove("playing");
+        }
+    });
+}
 
 var tag = document.createElement('script');
 tag.src = "https://www.youtube.com/iframe_api";
@@ -538,23 +711,12 @@ function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player('player', {
         videoId: allMusic[musicIndex].video,
         playerVars: {
-            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 0,
+            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 0, 
             'playlist': allMusic[musicIndex].video,
-            'playsinline': 1, 'modestbranding': 1, 'rel': 0,
-            'vq': 'hd2160'
+            'playsinline': 1, 'modestbranding': 1, 'rel': 0, 'vq': 'hd2160'
         },
         events: {
-            'onReady': (e) => {
-                e.target.playVideo();
-                setInterval(() => {
-                    const duration = ytPlayer.getDuration();
-                    const currentTime = ytPlayer.getCurrentTime();
-                    if (duration > 0 && (duration - currentTime) < 0.5) {
-                        ytPlayer.seekTo(0);
-                        ytPlayer.playVideo();
-                    }
-                }, 100);
-            },
+            'onReady': (e) => e.target.playVideo(),
             'onStateChange': (e) => {
                 if (e.data === YT.PlayerState.ENDED) {
                     ytPlayer.seekTo(0);
@@ -566,35 +728,59 @@ function onYouTubeIframeAPIReady() {
 }
 
 function loadMusic(index) {
-    loadingOverlay.style.display = "flex"; 
+    loadingOverlay.style.display = "flex";
     const music = allMusic[index];
     musicName.innerText = music.name;
     musicArtist.innerText = music.artist;
-    musicImg.src = music.img;
-    mainAudio.src = music.src;
-    mainAudio.load();
+    
+    musicImg.onload = () => {
+        loadingOverlay.style.display = "none";
+    };
+    
+    musicImg.src = music.img; 
+    mainAudio.src = music.src; 
+    mainAudio.load(); 
 
     if (ytPlayer && ytPlayer.loadVideoById) {
-        ytPlayer.loadVideoById({
-            videoId: music.video,
-            playlist: music.video,
-            startSeconds: 0
-        });
+        ytPlayer.loadVideoById({ videoId: music.video, playlist: music.video });
     }
     currentLyricIndex = -1;
     displayLyrics(music.lyrics);
+    playingNow();
 }
 
-mainAudio.addEventListener("waiting", () => {
-    loadingOverlay.style.display = "flex"; 
+playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
+nextBtn.addEventListener("click", () => nextMusic());
+prevBtn.addEventListener("click", () => prevMusic());
+repeatBtn.addEventListener("click", () => {
+    isRepeat = !isRepeat;
+    repeatBtn.classList.toggle("active");
 });
 
-mainAudio.addEventListener("playing", () => {
-    loadingOverlay.style.display = "none"; 
+showListBtn.addEventListener("click", () => {
+    musicList.classList.toggle("show");
 });
 
-mainAudio.addEventListener("canplay", () => {
-    loadingOverlay.style.display = "none"; 
+closeListBtn.addEventListener("click", () => {
+    musicList.classList.remove("show"); // 
+});
+
+mainAudio.addEventListener("ended", () => {
+    if (isRepeat) {
+        mainAudio.currentTime = 0;
+        playSong();
+    } else {
+        nextMusic();
+    }
+});
+
+volumeSlider.addEventListener("input", (e) => {
+    const vol = e.target.value;
+    mainAudio.volume = vol; 
+    
+    if (ytPlayer && ytPlayer.setVolume) {
+        ytPlayer.setVolume(vol * 100); 
+    }
 });
 
 function playSong() {
@@ -621,71 +807,30 @@ function prevMusic() {
     playSong();
 }
 
-playPauseBtn.addEventListener("click", (e) => {
-    e.stopPropagation();
-    isPlaying ? pauseSong() : playSong();
-});
-
-nextBtn.addEventListener("click", () => nextMusic());
-prevBtn.addEventListener("click", () => prevMusic());
-
-volumeSlider.addEventListener("input", (e) => {
-    mainAudio.volume = e.target.value;
-});
-
-mainAudio.addEventListener("ended", () => nextMusic());
-
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
-
     if (duration) {
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
-
         let curMin = Math.floor(currentTime / 60);
         let curSec = Math.floor(currentTime % 60);
         musicCurrentTime.innerText = `${curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
-
         let durMin = Math.floor(duration / 60);
         let durSec = Math.floor(duration % 60);
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
-
         updateLyrics(currentTime);
-
-        if ((currentTime / duration) > 0.5) {
-            let nextIndex = (musicIndex + 1) % allMusic.length;
-            let preloadTag = document.getElementById('audio-preloader');
-            if (!preloadTag) {
-                preloadTag = document.createElement('audio');
-                preloadTag.id = 'audio-preloader';
-                preloadTag.style.display = 'none';
-                document.body.appendChild(preloadTag);
-            }
-            if (preloadTag.src !== window.location.origin + '/' + allMusic[nextIndex].src &&
-                preloadTag.getAttribute('data-index') !== String(nextIndex)) {
-                preloadTag.src = allMusic[nextIndex].src;
-                preloadTag.setAttribute('data-index', String(nextIndex));
-                preloadTag.preload = "auto";
-                preloadTag.load();
-            }
-        }
     }
 });
 
 progressArea.addEventListener("click", (e) => {
-    let progressWidth = progressArea.clientWidth;
-    let clickedOffsetX = e.offsetX;
-    mainAudio.currentTime = (clickedOffsetX / progressWidth) * mainAudio.duration;
+    mainAudio.currentTime = (e.offsetX / progressArea.clientWidth) * mainAudio.duration;
     playSong();
 });
 
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
-        `<div class="lyric-line">
-            <div class="main-text">${line.text}</div>
-            <div class="sub-text">${line.translation || ""}</div>
-        </div>`
+        `<div class="lyric-line"><div class="main-text">${line.text}</div><div class="sub-text">${line.translation || ""}</div></div>`
     ).join("");
     lyricsWrapper.style.transform = `translateY(180px)`;
 }
@@ -696,15 +841,13 @@ function updateLyrics(currentTime) {
     for (let i = 0; i < lyrics.length; i++) {
         if (currentTime >= lyrics[i].time) activeIndex = i;
     }
-
     if (activeIndex !== -1 && activeIndex !== currentLyricIndex) {
         currentLyricIndex = activeIndex;
         const lines = document.querySelectorAll(".lyric-line");
-        const activeLine = lines[activeIndex];
         lines.forEach((line, index) => {
             if (index === activeIndex) {
                 line.classList.add("active");
-                const offset = 170 - activeLine.offsetTop;
+                const offset = 170 - line.offsetTop;
                 lyricsWrapper.style.transform = `translateY(${offset}px)`;
             } else {
                 line.classList.remove("active");
@@ -713,34 +856,8 @@ function updateLyrics(currentTime) {
     }
 }
 
-window.addEventListener("keydown", (e) => {
-    if (e.code === "Space") {
-        e.preventDefault();
-        isPlaying ? pauseSong() : playSong();
-    }
-    else if (e.code === "ArrowLeft") {
-        mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
-        currentLyricIndex = -1;
-    }
-    else if (e.code === "ArrowRight") {
-        mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
-        currentLyricIndex = -1;
-    }
-    else if (e.code === "ArrowUp") {
-        e.preventDefault();
-        mainAudio.volume = Math.min(1, mainAudio.volume + 0.05);
-        volumeSlider.value = mainAudio.volume;
-    }
-    else if (e.code === "ArrowDown") {
-        e.preventDefault();
-        mainAudio.volume = Math.max(0, mainAudio.volume - 0.05);
-        volumeSlider.value = mainAudio.volume;
-    }
-});
-
 window.addEventListener("load", () => {
+    initList();
     loadMusic(musicIndex);
-    document.body.addEventListener('click', () => {
-        if (ytPlayer && ytPlayer.playVideo) ytPlayer.playVideo();
-    }, { once: true });
+    mainAudio.volume = volumeSlider.value;
 });
