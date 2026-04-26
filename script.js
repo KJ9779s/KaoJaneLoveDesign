@@ -668,10 +668,9 @@ function initList() {
         new Sortable(ulTag, {
             handle: '.drag-handle',
             animation: 150,
-            ghostClass: 'sortable-ghost',
-            forceFallback: true,
-            fallbackOnBody: true,
-            swapThreshold: 0.65,
+            ghostClass: 'sortable-ghost', 
+            dragClass: 'sortable-drag',   
+            forceFallback: true,         
             onEnd: function (evt) {
                 const currentPlayingName = allMusic[musicIndex].name;
                 const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
@@ -684,9 +683,9 @@ function initList() {
 
                 musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
                 currentLyricIndex = -1; 
-            },
-        });
-    }
+             },
+         });
+     }
 }
 function playingNow() {
     const allLiTags = ulTag.querySelectorAll("li");
@@ -726,25 +725,30 @@ function onYouTubeIframeAPIReady() {
 
 function loadMusic(index) {
     loadingOverlay.style.display = "flex";
+    musicImg.style.opacity = "0"; 
+    
     const music = allMusic[index];
     musicName.innerText = music.name;
     musicArtist.innerText = music.artist;
     
-    musicImg.onload = () => {
-        loadingOverlay.style.display = "none";
-    };
 
+    musicImg.onload = () => {
+        loadingOverlay.style.display = "none"; 
+        musicImg.style.opacity = "1"; 
+    };
+    
     musicImg.onerror = () => {
         loadingOverlay.style.display = "none";
     };
     
-    musicImg.src = music.img; 
+    musicImg.src = music.img;
     mainAudio.src = music.src; 
     mainAudio.load(); 
 
     if (ytPlayer && ytPlayer.loadVideoById) {
         ytPlayer.loadVideoById({ videoId: music.video, playlist: music.video });
     }
+    
     currentLyricIndex = -1;
     displayLyrics(music.lyrics);
     playingNow();
