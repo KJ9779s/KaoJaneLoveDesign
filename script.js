@@ -633,6 +633,7 @@ const mainContainer = document.querySelector(".main-container"),
     volumeSlider = mainContainer.querySelector("#volume-slider"),
     lyricsWrapper = document.getElementById("lyrics-wrapper"),
     loadingOverlay = document.getElementById("loading-overlay");
+    ACCESS_PASSWORD = "0619";
 
 let musicIndex = 0;
 let mainAudio = new Audio();
@@ -640,6 +641,34 @@ let isPlaying = false;
 let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
+
+function checkPassword() {
+    const input = document.getElementById("password-input").value;
+    const screen = document.getElementById("password-screen");
+    const errorMsg = document.getElementById("password-error");
+
+    if (input === ACCESS_PASSWORD) {
+        screen.style.transition = "opacity 0.6s ease";
+        screen.style.opacity = "0";
+        setTimeout(() => {
+            screen.style.display = "none";
+        }, 600);
+        sessionStorage.setItem("kj_space_verified", "true");
+    } else {
+        errorMsg.style.display = "block";
+        document.getElementById("password-input").value = "";
+    }
+}
+
+window.addEventListener("DOMContentLoaded", () => {
+    if (sessionStorage.getItem("kj_verified") === "true") {
+        document.getElementById("password-screen").style.display = "none";
+    }
+});
+
+document.getElementById("password-input").addEventListener("keypress", (e) => {
+    if (e.key === "Enter") checkPassword();
+});
 
 function restoreMusicOrder() {
     try {

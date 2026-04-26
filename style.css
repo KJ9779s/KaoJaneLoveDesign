@@ -478,3 +478,15 @@ body {
 .sortable-chosen {
     background: rgba(255, 255, 255, 0.1) !important;
 }
+#password-screen {
+    backdrop-filter: blur(10px); 
+}
+
+#password-input:focus {
+    border-color: #fff !important;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+}
+
+#password-screen button:hover {
+    background: #cccccc !important;
+}

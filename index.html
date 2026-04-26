@@ -8,6 +8,57 @@
 					<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 
 						<style>
+							#password-screen {
+							position: fixed;
+							top: 0;
+							left: 0;
+							width: 100%;
+							height: 100%;
+							background: #000;
+							z-index: 999999;
+							display: flex;
+							flex-direction: column;
+							align-items: center;
+							justify-content: center;
+							color: #fff;
+							font-family: sans-serif;
+							backdrop-filter: blur(10px);
+							-webkit-backdrop-filter: blur(10px);
+							}
+
+							#password-input {
+							padding: 12px 20px;
+							border-radius: 50px;
+							border: 1px solid rgba(255,255,255,0.3);
+							background: rgba(255,255,255,0.1);
+							color: #fff;
+							text-align: center;
+							outline: none;
+							margin-bottom: 20px;
+							width: 200px;
+							transition: 0.3s;
+							}
+
+							#password-input:focus {
+							border-color: #fff;
+							box-shadow: 0 0 10px rgba(255, 255, 255, 0.2);
+							}
+
+							#password-screen button {
+							padding: 10px 30px;
+							border-radius: 50px;
+							border: none;
+							background: #fff;
+							color: #000;
+							cursor: pointer;
+							font-weight: bold;
+							transition: 0.3s;
+							}
+
+							#password-screen button:hover {
+							background: #ccc;
+							}
+
 							.disclaimer-footer {
 							position: fixed !important;
 							bottom: 10px !important;
@@ -17,15 +68,24 @@
 							font-size: 11px !important;
 							color: rgba(255, 255, 255, 0.4) !important;
 							letter-spacing: 0.5px !important;
-							z-index: 99999 !important; /* 極高層級 */
+							z-index: 99999 !important;
 							pointer-events: none !important;
 							padding: 0 20px !important;
 							display: block !important;
-							text-shadow: 1px 1px 2px rgba(0,0,0,0.8); /* 增加黑影避免被淺色背景吃掉 */
+							text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 							}
 						</style>
 					</head>
 	<body>
+
+		<div id="password-screen">
+			<h2 style="margin-bottom: 20px; font-weight: 300; letter-spacing: 2px;"> 9779s 專屬空間</h2>
+			<p style="margin-bottom: 20px; color: rgba(255,255,255,0.6); font-size: 14px;">請輸入密碼進入播放器</p>
+			<input type="password" id="password-input" placeholder="請輸入密碼">
+				<button onclick="checkPassword()">進入</button>
+				<p id="password-error" style="color: #ff4d4d; margin-top: 15px; font-size: 12px; display: none;">密碼錯誤，請重新輸入</p>
+			</div>
+
 		<div class="watermark">
 			<img src="threads.png">
 				<span>kjsy97</span>
@@ -64,15 +124,11 @@
 							<i class="fas fa-redo-alt"></i>
 							<span class="repeat-one">1</span>
 						</div>
-
 						<i id="prev" class="fas fa-step-backward"></i>
-
 						<div class="play-pause">
 							<i class="fas fa-play"></i>
 						</div>
-
 						<i id="next" class="fas fa-step-forward"></i>
-
 						<i id="show-list" class="fas fa-list"></i>
 					</div>
 
@@ -97,14 +153,45 @@
 				</div>
 				<ul></ul>
 			</div>
+
+			<footer class="disclaimer-footer">
+				本網頁僅供粉絲個人應援使用，非商業用途。網頁內所有圖片、音訊及影片之著作權均屬藝人及其所屬經紀公司所有。若有侵權請告知，將立即配合移除。
+			</footer>
 		</div>
 
-		<div class="disclaimer-footer">
-			本網頁僅供粉絲個人應援使用，非商業用途。網頁內所有圖片、音訊及影片之著作權均屬藝人及其所屬經紀公司所有。若有侵權請告知，將立即配合移除。
-		</div>
-
-		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
-		<script src="music-list.js"></script>
+		<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 		<script src="script.js"></script>
+
+		<script>
+			const ACCESS_PASSWORD = "0619"; 
+
+			function checkPassword() {
+			const input = document.getElementById("password-input").value;
+			const screen = document.getElementById("password-screen");
+			const errorMsg = document.getElementById("password-error");
+
+			if (input === ACCESS_PASSWORD) {
+			screen.style.transition = "opacity 0.6s ease";
+			screen.style.opacity = "0";
+			setTimeout(() => {
+			screen.style.display = "none";
+			}, 600);
+			sessionStorage.setItem("kj_space_verified", "true");
+			} else {
+			errorMsg.style.display = "block";
+			document.getElementById("password-input").value = "";
+			}
+			}
+
+			window.addEventListener("DOMContentLoaded", () => {
+			if (sessionStorage.getItem("kj_space_verified") === "true") {
+			document.getElementById("password-screen").style.display = "none";
+			}
+			});
+
+			document.getElementById("password-input").addEventListener("keypress", (e) => {
+			if (e.key === "Enter") checkPassword();
+			});
+		</script>
 	</body>
 </html>
