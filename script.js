@@ -642,12 +642,20 @@ let currentLyricIndex = -1;
 let ytPlayer;
 
 function restoreMusicOrder() {
-    const savedOrder = localStorage.getItem("musicPlaylistOrder");
-    if (savedOrder) {
-        const orderArray = JSON.parse(savedOrder);
-        allMusic.sort((a, b) => {
-            return orderArray.indexOf(a.name) - orderArray.indexOf(b.name);
-        });
+    try {
+        const savedOrder = localStorage.getItem("musicPlaylistOrder");
+        if (savedOrder) {
+            const orderArray = JSON.parse(savedOrder);
+            allMusic.sort((a, b) => {
+                let indexA = orderArray.indexOf(a.name);
+                let indexB = orderArray.indexOf(b.name);
+                if (indexA === -1) indexA = 999;
+                if (indexB === -1) indexB = 999;
+                return indexA - indexB;
+            });
+        }
+    } catch (e) {
+        console.error("讀取播放清單順序失敗:", e);
     }
 }
 
