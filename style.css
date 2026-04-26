@@ -478,21 +478,17 @@ body {
 .sortable-chosen {
     background: rgba(255, 255, 255, 0.1) !important;
 }
-.disclaimer {
+/* 免責聲明樣式：固定在底部、半透明、最上層 */
+.disclaimer-footer {
     position: fixed;
-    bottom: 10px;          
+    bottom: 15px; /* 距離底部距離 */
     left: 0;
-    width: 100%;
-    text-align: center;     
-    color: rgba(255, 255, 255, 0.3);
-    font-size: 12px;     
-    z-index: 1001;          
-    pointer-events: none;    
+    right: 0;
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255, 255, 255, 0.4); /* 白色半透明，不干擾視覺 */
+    letter-spacing: 0.5px;
+    z-index: 9999; /* 確保在所有元素最上層 */
+    pointer-events: none; /* 讓滑鼠點擊可以穿透，不影響網頁操作 */
     padding: 0 20px;
-    letter-spacing: 0.5px;   
 }
-
-@media (max-width: 768px) {
-    .disclaimer {
-        bottom: 5px;
-        font-size: 10px;
