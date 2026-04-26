@@ -562,7 +562,7 @@
         artist: "Janeeyeh Methika",
         img: "https://i.pinimg.com/736x/58/00/84/580084459ec9f52b9504eebce1bb81f9.jpg",
         src: "s12.mp3",
-        video: "oldwCGZz2G0",
+        video: "Q3xtNfYymFE",
         lyrics: [
             { time: 0, text: "( 前奏 ) ", translation: " " },
             { time: 16, text: "寶貝 今晚的我有點醉", translation: " " },
