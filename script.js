@@ -641,6 +641,7 @@ let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
+// 初始化播放清單與拖拽優化 [cite: 121, 124]
 function initList() {
     ulTag.innerHTML = "";
     allMusic.forEach((music, index) => {
@@ -831,6 +832,35 @@ volumeSlider.addEventListener("input", (e) => {
     if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(vol * 100);
 });
 
+window.addEventListener("keydown", (e) => {
+    const keysToBlock = ["Space", "ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight"];
+    if (keysToBlock.includes(e.code)) e.preventDefault();
+
+    switch (e.code) {
+        case "Space": 
+            isPlaying ? pauseSong() : playSong();
+            break;
+        case "ArrowLeft": 
+            mainAudio.currentTime = Math.max(0, mainAudio.currentTime - 5);
+            break;
+        case "ArrowRight": 
+            mainAudio.currentTime = Math.min(mainAudio.duration, mainAudio.currentTime + 5);
+            break;
+        case "ArrowUp": 
+            volumeSlider.value = Math.min(1, parseFloat(volumeSlider.value) + 0.05);
+            volumeSlider.dispatchEvent(new Event('input'));
+            break;
+        case "ArrowDown": 
+            volumeSlider.value = Math.max(0, parseFloat(volumeSlider.value) - 0.05);
+            volumeSlider.dispatchEvent(new Event('input'));
+            break;
+        case "Digit1": 
+        case "Numpad1":
+            repeatBtn.click();
+            break;
+    }
+});
+
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
         `<div class="lyric-line">
@@ -883,7 +913,8 @@ function onYouTubeIframeAPIReady() {
             'playsinline': 1,
             'rel': 0,
             'showinfo': 0,
-            'modestbranding': 1
+            'modestbranding': 1,
+            'iv_load_policy': 3 
         },
         events: {
             'onReady': (e) => e.target.playVideo(),
@@ -893,8 +924,23 @@ function onYouTubeIframeAPIReady() {
 }
 
 function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.PLAYING) {
+        const duration = ytPlayer.getDuration();
+        const checkLoop = setInterval(() => {
+            if (ytPlayer.getPlayerState() !== YT.PlayerState.PLAYING) {
+                clearInterval(checkLoop);
+                return;
+            }
+            const currentTime = ytPlayer.getCurrentTime();
+            if (currentTime > duration - 0.2) {
+                ytPlayer.seekTo(0);
+                ytPlayer.playVideo();
+            }
+        }, 100);
+    }
+    
     if (event.data === YT.PlayerState.ENDED) {
         ytPlayer.seekTo(0); 
-        ytPlayer.playVideo(); 
+        ytPlayer.playVideo();
     }
 }
