@@ -641,6 +641,25 @@ let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
+function updateMediaSession() {
+    if ('mediaSession' in navigator) {
+        const music = allMusic[musicIndex];
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: music.name,
+            artist: music.artist,
+            artwork: [
+                { src: music.img, sizes: '512x512', type: 'image/jpeg' }
+            ]
+        });
+
+        // 設置控制中心按鍵動作
+        navigator.mediaSession.setActionHandler('play', () => playSong());
+        navigator.mediaSession.setActionHandler('pause', () => pauseSong());
+        navigator.mediaSession.setActionHandler('previoustrack', () => prevMusic());
+        navigator.mediaSession.setActionHandler('nexttrack', () => nextMusic());
+    }
+}
+
 function initList() {
     ulTag.innerHTML = "";
     allMusic.forEach((music, index) => {
@@ -752,6 +771,7 @@ function loadMusic(index) {
     currentLyricIndex = -1;
     displayLyrics(music.lyrics);
     playingNow();
+    updateMediaSession();
 }
 
 playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
