@@ -675,10 +675,8 @@ function initList() {
                 const currentPlayingName = allMusic[musicIndex].name;
                 const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
                 allMusic.splice(evt.newIndex, 0, movedItem);
-                
                 const liTags = ulTag.querySelectorAll("li");
                 liTags.forEach((li, index) => li.setAttribute("li-index", index));
-                
                 musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
                 playingNow();
             },
@@ -761,9 +759,7 @@ function updateMediaSession() {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: music.name,
             artist: music.artist,
-            artwork: [
-                { src: music.img, sizes: '512x512', type: 'image/jpeg' }
-            ]
+            artwork: [{ src: music.img, sizes: '512x512', type: 'image/jpeg' }]
         });
 
         navigator.mediaSession.setActionHandler('play', playSong);
@@ -806,7 +802,6 @@ mainAudio.addEventListener("timeupdate", (e) => {
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
         
         updateLyrics(currentTime);
-        
         if (Math.floor(currentTime) % 2 === 0) syncPlaybackState();
     }
 });
@@ -881,9 +876,25 @@ firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
 function onYouTubeIframeAPIReady() {
     ytPlayer = new YT.Player('player', {
         videoId: allMusic[musicIndex].video,
-        playerVars: { 'autoplay': 1, 'mute': 1, 'controls': 0, 'playsinline': 1 },
+        playerVars: { 
+            'autoplay': 1, 
+            'mute': 1, 
+            'controls': 0, 
+            'playsinline': 1,
+            'rel': 0,
+            'showinfo': 0,
+            'modestbranding': 1
+        },
         events: {
-            'onReady': (e) => e.target.playVideo()
+            'onReady': (e) => e.target.playVideo(),
+            'onStateChange': onPlayerStateChange 
         }
     });
+}
+
+function onPlayerStateChange(event) {
+    if (event.data === YT.PlayerState.ENDED) {
+        ytPlayer.seekTo(0); 
+        ytPlayer.playVideo(); 
+    }
 }
