@@ -641,8 +641,23 @@ let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
-// 初始化播放清單與拖拽優化 [cite: 121, 124]
+function restoreMusicOrder() {
+    const savedOrder = localStorage.getItem("musicPlaylistOrder");
+    if (savedOrder) {
+        const orderArray = JSON.parse(savedOrder);
+        allMusic.sort((a, b) => {
+            return orderArray.indexOf(a.name) - orderArray.indexOf(b.name);
+        });
+    }
+}
+
+function saveMusicOrder() {
+    const orderArray = allMusic.map(music => music.name);
+    localStorage.setItem("musicPlaylistOrder", JSON.stringify(orderArray));
+}
+
 function initList() {
+    restoreMusicOrder();
     ulTag.innerHTML = "";
     allMusic.forEach((music, index) => {
         let liTag = `<li li-index="${index}">
@@ -680,6 +695,7 @@ function initList() {
                 liTags.forEach((li, index) => li.setAttribute("li-index", index));
                 musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
                 playingNow();
+                saveMusicOrder();
             },
         });
     }
