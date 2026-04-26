@@ -644,6 +644,7 @@ let ytPlayer;
 function updateMediaSession() {
     if ('mediaSession' in navigator) {
         const music = allMusic[musicIndex];
+        
         navigator.mediaSession.metadata = new MediaMetadata({
             title: music.name,
             artist: music.artist,
@@ -652,94 +653,39 @@ function updateMediaSession() {
             ]
         });
 
-        // 設置控制中心按鍵動作
         navigator.mediaSession.setActionHandler('play', () => playSong());
         navigator.mediaSession.setActionHandler('pause', () => pauseSong());
         navigator.mediaSession.setActionHandler('previoustrack', () => prevMusic());
         navigator.mediaSession.setActionHandler('nexttrack', () => nextMusic());
+
+        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+            mainAudio.currentTime = Math.max(mainAudio.currentTime - (details.seekOffset || 10), 0);
+        });
+        navigator.mediaSession.setActionHandler('seekforward', (details) => {
+            mainAudio.currentTime = Math.min(mainAudio.currentTime + (details.seekOffset || 10), mainAudio.duration);
+        });
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            if (details.fastSeek && 'fastSeek' in mainAudio) {
+                mainAudio.fastSeek(details.seekTime);
+            } else {
+                mainAudio.currentTime = details.seekTime;
+            }
+        });
     }
 }
 
-function initList() {
-    ulTag.innerHTML = "";
-    allMusic.forEach((music, index) => {
-        let liTag = `<li li-index="${index}">
-                        <i class="fas fa-bars drag-handle"></i> <div class="row">
-                            <span>${music.name}</span>
-                            <p>${music.artist}</p>
-                        </div>
-                    </li>`;
-        ulTag.insertAdjacentHTML("beforeend", liTag);
-    });
-
-    const allLiTags = ulTag.querySelectorAll("li");
-    allLiTags.forEach(li => {
-        li.addEventListener("click", (e) => {
-            if(e.target.classList.contains('drag-handle')) return; 
-            musicIndex = parseInt(li.getAttribute("li-index"));
-            loadMusic(musicIndex);
-            playSong();
-            playingNow(); 
-        });
-    });
-
-    if (typeof Sortable !== 'undefined') {
-        new Sortable(ulTag, {
-            handle: '.drag-handle',
-            animation: 150,
-            ghostClass: 'sortable-ghost', 
-            dragClass: 'sortable-drag',   
-            forceFallback: true,         
-            onEnd: function (evt) {
-                const currentPlayingName = allMusic[musicIndex].name;
-                const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
-                allMusic.splice(evt.newIndex, 0, movedItem);
-
-                const liTags = ulTag.querySelectorAll("li");
-                liTags.forEach((li, index) => {
-                    li.setAttribute("li-index", index);
-                });
-
-                musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
-                currentLyricIndex = -1; 
-             },
-         });
-     }
-}
-function playingNow() {
-    const allLiTags = ulTag.querySelectorAll("li");
-    allLiTags.forEach(li => {
-        if (parseInt(li.getAttribute("li-index")) === musicIndex) {
-            li.classList.add("playing");
-        } else {
-            li.classList.remove("playing");
+function syncPlaybackState() {
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+        
+        if (!isNaN(mainAudio.duration)) {
+            navigator.mediaSession.setPositionState({
+                duration: mainAudio.duration,
+                playbackRate: mainAudio.playbackRate,
+                position: mainAudio.currentTime
+            });
         }
-    });
-}
-
-var tag = document.createElement('script');
-tag.src = "https://www.youtube.com/iframe_api";
-var firstScriptTag = document.getElementsByTagName('script')[0];
-firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
-
-function onYouTubeIframeAPIReady() {
-    ytPlayer = new YT.Player('player', {
-        videoId: allMusic[musicIndex].video,
-        playerVars: {
-            'autoplay': 1, 'mute': 1, 'controls': 0, 'loop': 0, 
-            'playlist': allMusic[musicIndex].video,
-            'playsinline': 1, 'modestbranding': 1, 'rel': 0, 'vq': 'hd2160'
-        },
-        events: {
-            'onReady': (e) => e.target.playVideo(),
-            'onStateChange': (e) => {
-                if (e.data === YT.PlayerState.ENDED) {
-                    ytPlayer.seekTo(0);
-                    ytPlayer.playVideo();
-                }
-            }
-        }
-    });
+    }
 }
 
 function loadMusic(index) {
@@ -750,14 +696,9 @@ function loadMusic(index) {
     musicName.innerText = music.name;
     musicArtist.innerText = music.artist;
     
-
     musicImg.onload = () => {
-        loadingOverlay.style.display = "none"; 
-        musicImg.style.opacity = "1"; 
-    };
-    
-    musicImg.onerror = () => {
         loadingOverlay.style.display = "none";
+        musicImg.style.opacity = "1"; 
     };
     
     musicImg.src = music.img;
@@ -774,50 +715,17 @@ function loadMusic(index) {
     updateMediaSession();
 }
 
-playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
-nextBtn.addEventListener("click", () => nextMusic());
-prevBtn.addEventListener("click", () => prevMusic());
-repeatBtn.addEventListener("click", () => {
-    isRepeat = !isRepeat;
-    repeatBtn.classList.toggle("active");
-});
-
-showListBtn.addEventListener("click", () => {
-    musicList.classList.toggle("show");
-});
-
-closeListBtn.addEventListener("click", () => {
-    musicList.classList.remove("show"); // 
-});
-
-mainAudio.addEventListener("ended", () => {
-    if (isRepeat) {
-        mainAudio.currentTime = 0;
-        playSong();
-    } else {
-        nextMusic();
-    }
-});
-
-volumeSlider.addEventListener("input", (e) => {
-    const vol = e.target.value;
-    mainAudio.volume = vol; 
-    
-    if (ytPlayer && ytPlayer.setVolume) {
-        ytPlayer.setVolume(vol * 100); 
-    }
-});
-
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
-    mainAudio.play();
+    mainAudio.play().then(syncPlaybackState).catch(e => console.error(e));
 }
 
 function pauseSong() {
     isPlaying = false;
     playPauseIcon.classList.replace("fa-pause", "fa-play");
     mainAudio.pause();
+    syncPlaybackState();
 }
 
 function nextMusic() {
@@ -838,24 +746,97 @@ mainAudio.addEventListener("timeupdate", (e) => {
     if (duration) {
         let progressWidth = (currentTime / duration) * 100;
         progressBar.style.width = `${progressWidth}%`;
+        
         let curMin = Math.floor(currentTime / 60);
         let curSec = Math.floor(currentTime % 60);
         musicCurrentTime.innerText = `${curMin}:${curSec < 10 ? '0' + curSec : curSec}`;
+        
         let durMin = Math.floor(duration / 60);
         let durSec = Math.floor(duration % 60);
         musicDuration.innerText = `${durMin}:${durSec < 10 ? '0' + durSec : durSec}`;
+        
         updateLyrics(currentTime);
+        
+        if (Math.floor(currentTime) % 2 === 0) {
+            syncPlaybackState();
+        }
     }
 });
 
 progressArea.addEventListener("click", (e) => {
-    mainAudio.currentTime = (e.offsetX / progressArea.clientWidth) * mainAudio.duration;
+    let progressWidth = progressArea.clientWidth;
+    let clickedOffsetX = e.offsetX;
+    let songDuration = mainAudio.duration;
+    mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
     playSong();
+});
+
+function initList() {
+    ulTag.innerHTML = "";
+    allMusic.forEach((music, index) => {
+        let liTag = `<li li-index="${index}">
+                        <i class="fas fa-bars drag-handle"></i> <div class="row">
+                            <span>${music.name}</span>
+                            <p>${music.artist}</p>
+                        </div>
+                    </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+    });
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        li.addEventListener("click", (e) => {
+            if(e.target.classList.contains('drag-handle')) return; 
+            musicIndex = parseInt(li.getAttribute("li-index"));
+            loadMusic(musicIndex);
+            playSong();
+        });
+    });
+}
+
+function playingNow() {
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        if (parseInt(li.getAttribute("li-index")) === musicIndex) {
+            li.classList.add("playing");
+        } else {
+            li.classList.remove("playing");
+        }
+    });
+}
+
+playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
+nextBtn.addEventListener("click", () => nextMusic());
+prevBtn.addEventListener("click", () => prevMusic());
+
+repeatBtn.addEventListener("click", () => {
+    isRepeat = !isRepeat;
+    repeatBtn.classList.toggle("active");
+});
+
+showListBtn.addEventListener("click", () => musicList.classList.toggle("show"));
+closeListBtn.addEventListener("click", () => musicList.classList.remove("show"));
+
+mainAudio.addEventListener("ended", () => {
+    if (isRepeat) {
+        mainAudio.currentTime = 0;
+        playSong();
+    } else {
+        nextMusic();
+    }
+});
+
+volumeSlider.addEventListener("input", (e) => {
+    const vol = e.target.value;
+    mainAudio.volume = vol; 
+    if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(vol * 100); 
 });
 
 function displayLyrics(lyrics) {
     lyricsWrapper.innerHTML = lyrics.map(line =>
-        `<div class="lyric-line"><div class="main-text">${line.text}</div><div class="sub-text">${line.translation || ""}</div></div>`
+        `<div class="lyric-line">
+            <div class="main-text">${line.text}</div>
+            <div class="sub-text">${line.translation || ""}</div>
+        </div>`
     ).join("");
     lyricsWrapper.style.transform = `translateY(180px)`;
 }
