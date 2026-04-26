@@ -560,7 +560,7 @@
     {
         name: "愛妳但說不出口",
         artist: "Janeeyeh Methika",
-        img: "https://i.pinimg.com/736x/ee/f8/b4/eef8b40261c68950c7ef0571ea165124.jpg",
+        img: "https://i.pinimg.com/736x/58/00/84/580084459ec9f52b9504eebce1bb81f9.jpg",
         src: "s12.mp3",
         video: "z848y0Xxf5o",
         lyrics: [
@@ -641,69 +641,82 @@ let isRepeat = false;
 let currentLyricIndex = -1;
 let ytPlayer;
 
-function updateMediaSession() {
-    if ('mediaSession' in navigator) {
-        const music = allMusic[musicIndex];
-        
-        navigator.mediaSession.metadata = new MediaMetadata({
-            title: music.name,
-            artist: music.artist,
-            artwork: [
-                { src: music.img, sizes: '512x512', type: 'image/jpeg' }
-            ]
-        });
+function initList() {
+    ulTag.innerHTML = "";
+    allMusic.forEach((music, index) => {
+        let liTag = `<li li-index="${index}">
+                        <i class="fas fa-bars drag-handle"></i> 
+                        <div class="row">
+                            <span>${music.name}</span>
+                            <p>${music.artist}</p>
+                        </div>
+                    </li>`;
+        ulTag.insertAdjacentHTML("beforeend", liTag);
+    });
 
-        navigator.mediaSession.setActionHandler('play', () => playSong());
-        navigator.mediaSession.setActionHandler('pause', () => pauseSong());
-        navigator.mediaSession.setActionHandler('previoustrack', () => prevMusic());
-        navigator.mediaSession.setActionHandler('nexttrack', () => nextMusic());
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        li.addEventListener("click", (e) => {
+            if (e.target.classList.contains('drag-handle')) return;
+            musicIndex = parseInt(li.getAttribute("li-index"));
+            loadMusic(musicIndex);
+            playSong();
+        });
+    });
 
-        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-            mainAudio.currentTime = Math.max(mainAudio.currentTime - (details.seekOffset || 10), 0);
-        });
-        navigator.mediaSession.setActionHandler('seekforward', (details) => {
-            mainAudio.currentTime = Math.min(mainAudio.currentTime + (details.seekOffset || 10), mainAudio.duration);
-        });
-        navigator.mediaSession.setActionHandler('seekto', (details) => {
-            if (details.fastSeek && 'fastSeek' in mainAudio) {
-                mainAudio.fastSeek(details.seekTime);
-            } else {
-                mainAudio.currentTime = details.seekTime;
-            }
+    if (typeof Sortable !== 'undefined') {
+        new Sortable(ulTag, {
+            handle: '.drag-handle',
+            animation: 150,
+            delay: 150,
+            delayOnTouchOnly: true,
+            touchStartThreshold: 5,
+            onEnd: function (evt) {
+                const currentPlayingName = allMusic[musicIndex].name;
+                const movedItem = allMusic.splice(evt.oldIndex, 1)[0];
+                allMusic.splice(evt.newIndex, 0, movedItem);
+                
+                const liTags = ulTag.querySelectorAll("li");
+                liTags.forEach((li, index) => li.setAttribute("li-index", index));
+                
+                musicIndex = allMusic.findIndex(music => music.name === currentPlayingName);
+                playingNow();
+            },
         });
     }
 }
 
-function syncPlaybackState() {
-    if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
-        
-        if (!isNaN(mainAudio.duration)) {
-            navigator.mediaSession.setPositionState({
-                duration: mainAudio.duration,
-                playbackRate: mainAudio.playbackRate,
-                position: mainAudio.currentTime
-            });
+function playingNow() {
+    const allLiTags = ulTag.querySelectorAll("li");
+    allLiTags.forEach(li => {
+        if (parseInt(li.getAttribute("li-index")) === musicIndex) {
+            li.classList.add("playing");
+        } else {
+            li.classList.remove("playing");
         }
-    }
+    });
 }
 
 function loadMusic(index) {
     loadingOverlay.style.display = "flex";
-    musicImg.style.opacity = "0"; 
+    musicImg.style.opacity = "0.3"; 
     
     const music = allMusic[index];
     musicName.innerText = music.name;
     musicArtist.innerText = music.artist;
-    
-    musicImg.onload = () => {
-        loadingOverlay.style.display = "none";
-        musicImg.style.opacity = "1"; 
-    };
-    
     musicImg.src = music.img;
-    mainAudio.src = music.src; 
-    mainAudio.load(); 
+    
+    mainAudio.src = music.src;
+    mainAudio.load();
+
+    mainAudio.oncanplaythrough = () => {
+        loadingOverlay.style.display = "none";
+        musicImg.style.opacity = "1";
+    };
+
+    mainAudio.onwaiting = () => {
+        loadingOverlay.style.display = "flex";
+    };
 
     if (ytPlayer && ytPlayer.loadVideoById) {
         ytPlayer.loadVideoById({ videoId: music.video, playlist: music.video });
@@ -718,7 +731,9 @@ function loadMusic(index) {
 function playSong() {
     isPlaying = true;
     playPauseIcon.classList.replace("fa-play", "fa-pause");
-    mainAudio.play().then(syncPlaybackState).catch(e => console.error(e));
+    mainAudio.play().then(syncPlaybackState).catch(() => {
+        console.log("Waiting for user interaction");
+    });
 }
 
 function pauseSong() {
@@ -740,6 +755,41 @@ function prevMusic() {
     playSong();
 }
 
+function updateMediaSession() {
+    if ('mediaSession' in navigator) {
+        const music = allMusic[musicIndex];
+        navigator.mediaSession.metadata = new MediaMetadata({
+            title: music.name,
+            artist: music.artist,
+            artwork: [
+                { src: music.img, sizes: '512x512', type: 'image/jpeg' }
+            ]
+        });
+
+        navigator.mediaSession.setActionHandler('play', playSong);
+        navigator.mediaSession.setActionHandler('pause', pauseSong);
+        navigator.mediaSession.setActionHandler('previoustrack', prevMusic);
+        navigator.mediaSession.setActionHandler('nexttrack', nextMusic);
+        
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            mainAudio.currentTime = details.seekTime;
+        });
+    }
+}
+
+function syncPlaybackState() {
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+        if (!isNaN(mainAudio.duration)) {
+            navigator.mediaSession.setPositionState({
+                duration: mainAudio.duration,
+                playbackRate: mainAudio.playbackRate,
+                position: mainAudio.currentTime
+            });
+        }
+    }
+}
+
 mainAudio.addEventListener("timeupdate", (e) => {
     const currentTime = e.target.currentTime;
     const duration = e.target.duration;
@@ -757,56 +807,18 @@ mainAudio.addEventListener("timeupdate", (e) => {
         
         updateLyrics(currentTime);
         
-        if (Math.floor(currentTime) % 2 === 0) {
-            syncPlaybackState();
-        }
+        if (Math.floor(currentTime) % 2 === 0) syncPlaybackState();
     }
 });
 
 progressArea.addEventListener("click", (e) => {
-    let progressWidth = progressArea.clientWidth;
-    let clickedOffsetX = e.offsetX;
-    let songDuration = mainAudio.duration;
-    mainAudio.currentTime = (clickedOffsetX / progressWidth) * songDuration;
+    mainAudio.currentTime = (e.offsetX / progressArea.clientWidth) * mainAudio.duration;
     playSong();
 });
 
-function initList() {
-    ulTag.innerHTML = "";
-    allMusic.forEach((music, index) => {
-        let liTag = `<li li-index="${index}">
-                        <i class="fas fa-bars drag-handle"></i> <div class="row">
-                            <span>${music.name}</span>
-                            <p>${music.artist}</p>
-                        </div>
-                    </li>`;
-        ulTag.insertAdjacentHTML("beforeend", liTag);
-    });
-    const allLiTags = ulTag.querySelectorAll("li");
-    allLiTags.forEach(li => {
-        li.addEventListener("click", (e) => {
-            if(e.target.classList.contains('drag-handle')) return; 
-            musicIndex = parseInt(li.getAttribute("li-index"));
-            loadMusic(musicIndex);
-            playSong();
-        });
-    });
-}
-
-function playingNow() {
-    const allLiTags = ulTag.querySelectorAll("li");
-    allLiTags.forEach(li => {
-        if (parseInt(li.getAttribute("li-index")) === musicIndex) {
-            li.classList.add("playing");
-        } else {
-            li.classList.remove("playing");
-        }
-    });
-}
-
 playPauseBtn.addEventListener("click", () => isPlaying ? pauseSong() : playSong());
-nextBtn.addEventListener("click", () => nextMusic());
-prevBtn.addEventListener("click", () => prevMusic());
+nextBtn.addEventListener("click", nextMusic);
+prevBtn.addEventListener("click", prevMusic);
 
 repeatBtn.addEventListener("click", () => {
     isRepeat = !isRepeat;
@@ -816,19 +828,12 @@ repeatBtn.addEventListener("click", () => {
 showListBtn.addEventListener("click", () => musicList.classList.toggle("show"));
 closeListBtn.addEventListener("click", () => musicList.classList.remove("show"));
 
-mainAudio.addEventListener("ended", () => {
-    if (isRepeat) {
-        mainAudio.currentTime = 0;
-        playSong();
-    } else {
-        nextMusic();
-    }
-});
+mainAudio.addEventListener("ended", () => isRepeat ? (mainAudio.currentTime = 0, playSong()) : nextMusic());
 
 volumeSlider.addEventListener("input", (e) => {
     const vol = e.target.value;
-    mainAudio.volume = vol; 
-    if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(vol * 100); 
+    mainAudio.volume = vol;
+    if (ytPlayer && ytPlayer.setVolume) ytPlayer.setVolume(vol * 100);
 });
 
 function displayLyrics(lyrics) {
@@ -867,3 +872,18 @@ window.addEventListener("load", () => {
     loadMusic(musicIndex);
     mainAudio.volume = volumeSlider.value;
 });
+
+var tag = document.createElement('script');
+tag.src = "https://www.youtube.com/iframe_api";
+var firstScriptTag = document.getElementsByTagName('script')[0];
+firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+function onYouTubeIframeAPIReady() {
+    ytPlayer = new YT.Player('player', {
+        videoId: allMusic[musicIndex].video,
+        playerVars: { 'autoplay': 1, 'mute': 1, 'controls': 0, 'playsinline': 1 },
+        events: {
+            'onReady': (e) => e.target.playVideo()
+        }
+    });
+}
