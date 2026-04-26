@@ -1,4 +1,4 @@
-﻿const allMusic = [
+﻿﻿const allMusic = [
     {
         name: " วิมานเพลง | Love Design",
         artist: " Kao Supassara, Janeeyeh Methika",
