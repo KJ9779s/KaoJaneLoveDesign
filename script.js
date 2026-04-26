@@ -707,6 +707,49 @@
             { time: 182, text: " ", translation: "" },
             { time: 183, text: " ", translation: "" }          
         ]
+    },
+    {
+        name: "So Easy",
+        artist: "Janeeyeh Methika",
+        img: "https://i.pinimg.com/736x/e2/b2/e0/e2b2e0e3178f8d2d881eaa5163d4ddfc.jpg",
+        src: "s15.mp3",
+        video: "Av_At5PSnFA",
+        lyrics: [
+            { time: 0, text: " ( 前奏 ) ", translation: "" },
+            { time: 7.3, text: "I could be the twist, the one to make you stop", translation: "我可以成為那個讓妳人生轉彎 為我停下腳步的人 " },
+            { time: 10.4, text: "The icing on your cake, the cherry on the top", translation: "像是錦上添花的那一筆 蛋糕上最完美的那顆櫻桃 " },
+            { time: 13.7, text: "It's heaven in my heart, and we could find you some space", translation: "我心裡藏著一片天堂　也願意留給妳一點空間 " },
+            { time: 20.9, text: "I could be the world to you, the missing piece", translation: "我可以成為妳的全世界 妳生命中缺少的那一塊 " },
+            { time: 24, text: "That extra sentimental kind of chemistry", translation: "那種多一點感性 多一點心動的化學反應 " },
+            { time: 27.6, text: "Some people make it hard, with me, that isn't the case", translation: "有些人讓愛變得困難　但跟我在一起一點都不困難 " },
+            { time: 32, text: "'Cause I make it so easy to fall in love", translation: "因為愛上我其實很簡單 " },
+            { time: 38.7, text: "So come give me a call, and we'll fall into us", translation: "打電話給我吧　我和妳可以慢慢變成「我們」 " },
+            { time: 45.5, text: "I'm the perfect mix of Saturday night and the rest of your life", translation: "我是那種既可以讓妳在週六夜晚心動　也能陪妳走過一輩子的人 " },
+            { time: 51, text: "Anyone with a heart would agree", translation: "只要是有心的人都會同意 " },
+            { time: 54.8, text: "It's so easy,To fall in love with", translation: "愛上 一點都不困難" },
+            { time: 60.1, text: "The way I do my hair, the way I make you laugh", translation: "我整理頭髮的樣子 我逗妳笑的方式 " },
+            { time: 63.5, text: "The way we like to share a walk in Central Park", translation: "我們喜歡在中央公園一起散步的那種日常 " },
+            { time: 67.3, text: "I could be fresh air, might be the girl of your dreams", translation: "我可以是讓妳感到自在的那個人　也可能是妳的夢中情人 " },
+            { time: 73.4, text: "There's no need to hide if you're into me", translation: "如果妳喜歡我　真的不用假裝 " },
+            { time: 76.9, text: "'Cause I'm into you quite intimately", translation: "因為我對妳　也不只是朋友那種喜歡 " },
+            { time: 80.2, text: "And maybe one night could turn into three", translation: "也許一個夜晚　會悄悄變成三個 " },
+            { time: 83.5, text: "Well, I'm down to see", translation: "我願意看看　我們會走到哪裡 " },
+            { time: 85.4, text: "'Cause I make it so easy to fall in love", translation: "因為愛上我其實很簡單 " },
+            { time: 92, text: "So come give me a call, and we'll fall into us", translation: "打電話給我吧　我和妳可以慢慢變成「我們」 " },
+            { time: 98.6, text: "I'm the perfect mix of Saturday night and the rest of your life", translation: "我是那種既可以讓妳在週六夜晚心動　也能陪妳走過一輩子的人 " },
+            { time: 104.2, text: "Anyone with a heart would agree", translation: "只要是有心的人都會同意 " },
+            { time: 107.9, text: "It's so easy,To fall in love with me", translation: "愛上我 一點都不困難" },
+            { time: 126.8, text: "It's so easy", translation: "其實很簡單" },
+            { time: 130.3, text: "It's so easy", translation: "其實很簡單" },
+            { time: 133.6, text: "It's so easy", translation: "其實很簡單" },
+            { time: 138.4, text: "'Cause I make it so easy to fall in love", translation: "因為愛上我其實很簡單 " },
+            { time: 145, text: "So come give me a call, and we'll fall into us", translation: "打電話給我吧　我和妳可以慢慢變成「我們」 " },
+            { time: 151.9, text: "I'm the perfect mix of Saturday night and the rest of your life", translation: "我是那種既可以讓妳在週六夜晚心動　也能陪妳走過一輩子的人 " },
+            { time: 157.3, text: "Anyone with a heart would agree", translation: "只要是有心的人都會同意 " },
+            { time: 161, text: "It's so easy,To fall in love with me", translation: "愛上我 一點都不困難" }
+
+               
+        ]
     }
 ];
 const mainContainer = document.querySelector(".main-container"),
