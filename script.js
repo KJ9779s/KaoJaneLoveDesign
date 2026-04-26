@@ -670,6 +670,43 @@
             { time: 183.1, text: "用心刻畫最幸福的風格", translation: " " }
 
         ]
+    },
+    {
+        name: "Your Love",
+        artist: "Kao Supassara, Janeeyeh Methika",
+        img: "https://i.pinimg.com/736x/5e/79/61/5e79613adfe20845cdfd56901315d925.jpg",
+        src: "s14.mp3",
+        video: "SrkjXH1s_9M",
+        lyrics: [
+            { time: 0, text: "( 前奏 )", translation: " " },
+            { time: 17, text: "You're the one that never lets me sleep", translation: "妳就是那個讓我輾轉難眠的人 " },
+            { time: 22.3, text: "To my mind down to my soul you touch my lips", translation: "從我的思緒到靈魂深處 妳觸碰著我的雙唇 " },
+            { time: 29, text: "You're the one that I can't wait to see", translation: "妳就是那個讓我迫不及待想見的人 " },
+            { time: 34, text: "With you here by my side I'm in ecstasy", translation: "只要妳在我身邊 我便沉浸在狂喜之中 " },
+            { time: 41, text: "I am all alone without you", translation: "沒有妳 我倍感孤獨" },
+            { time: 46.8, text: "My days are dark without a glimpse of you", translation: "若不見妳的身影 我的日子便一片漆黑 " },
+            { time: 52, text: "But now that you came into my life I feel complete", translation: "但自從妳走進我的生命 我感到人生完整 " },
+            { time: 57.8, text: "The flowers bloom, my morning shines and I can see", translation: "花兒綻放 晨光閃耀 我終於能看清世界 " },
+            { time: 70, text: "Your love is like the sun that lights up my whole world", translation: "妳的愛像太陽 照亮了我的整個世界 " },
+            { time: 76.3, text: "I feel the warmth inside", translation: "我感受到內心的溫暖 " },
+            { time: 81.9, text: "Your love is like a river that flows down through my veins", translation: "妳的愛像河流 在我的血管裡流淌 " },
+            { time: 88.5, text: "I feel the chill inside", translation: "我感受到內心的悸動 " },
+            { time: 106, text: "I am all alone without you", translation: "沒有妳 我倍感孤獨" },
+            { time: 112, text: "My days are dark without a glimpse of you", translation: "若不見妳的身影 我的日子便一片漆黑 " },
+            { time: 117, text: "But now that you came into my life I feel complete", translation: "但自從妳走進我的生命 我感到人生完整 " },
+            { time: 123, text: "The flowers bloom, my morning shines and I can see", translation: "花兒綻放 晨光閃耀 我終於能看清世界 " },
+            { time: 132, text: "Your love is like the sun that lights up my whole world", translation: "妳的愛像太陽 照亮了我的整個世界 " },
+            { time: 138.8, text: "I feel the warmth inside", translation: "我感受到內心的溫暖 " },
+            { time: 144, text: "Your love is like a river that flows down through my veins", translation: "妳的愛像河流 在我的血管裡流淌 " },
+            { time: 150.5, text: "I feel the chill inside", translation: "我感受到內心的悸動 " },
+            { time: 155.7, text: "(your love...)", translation: " " },
+            { time: 167.2, text: "Your love is like a river that flows down through my veins", translation: "妳的愛像河流 在我的血管裡流淌 " },
+            { time: 179, text: " ", translation: "" },
+            { time: 180, text: " ", translation: "" },
+            { time: 181, text: " ", translation: "" },
+            { time: 182, text: " ", translation: "" },
+            { time: 183, text: " ", translation: "" }          
+        ]
     }
 ];
 const mainContainer = document.querySelector(".main-container"),
