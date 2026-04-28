@@ -796,6 +796,36 @@
             { time: 179, text: "", translation: "" },
             { time: 180, text: "", translation: "" },
         ]
+    },
+    {
+        name: "像晴天像雨天",
+        artist: "Janeeyeh Methika",
+        img: "https://i.pinimg.com/736x/2d/a6/b5/2da6b508e3b2080e471a2443cc3558e9.jpg",
+        src: "s18.mp3",
+        video: "iDs1ElSfM60",
+        lyrics: [
+            { time: 7, text: "措手不及", translation: "" },
+            { time: 9.5, text: "遇見妳 我開始變得不太聰明", translation: "" },
+            { time: 13.25, text: "心跳加速 有時候呼吸也暫停", translation: "" },
+            { time: 17.25, text: "身體 無法控制向妳靠近", translation: "" },
+            { time: 22, text: "步步為營", translation: "" },
+            { time: 24.55, text: "人物關係走向不可控的劇情", translation: "" },
+            { time: 28.25, text: "窗外飛過的宣告戀愛的蜻蜓", translation: "" },
+            { time: 32.25, text: "想妳 我的心事變得透明", translation: "" },
+            { time: 38.8, text: "一意孤行 汲汲營營 寸步難行", translation: "" },
+            { time: 46.25, text: "慢慢累積 拼湊不完整的旋律", translation: "" },
+            { time: 51.8, text: "我一貫的小心翼翼", translation: "" },
+            { time: 55.6, text: "現在卻想要告訴妳", translation: "" },
+            { time: 61.25, text: "好喜歡妳 像春天的花朵盛開在夏夜裡", translation: "" },
+            { time: 67.6, text: "像微風吹過雨後泥土的香氣", translation: "" },
+            { time: 71.4, text: "像迷途的旅人到達了目的地", translation: "" },
+            { time: 75.25, text: "像飛舞蝴蝶被絢爛色彩吸引", translation: "" },
+            { time: 79, text: "像流傳許久神秘的愛情咒語", translation: "" },
+            { time: 82.6, text: "像喧囂的午後突然變的安靜", translation: "" },
+            { time: 86.4, text: "像眼淚落入海底 逃離了孤寂", translation: "" },
+            { time: 90, text: "如果我能給妳短暫的開心", translation: "" }
+           
+        ]
     }
 ];
 const mainContainer = document.querySelector(".main-container"),
